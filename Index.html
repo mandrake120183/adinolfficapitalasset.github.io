@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adinolffi Capital Asset S.A.</title>
+
+  <style>
+    /* ---------- VARIABLES ---------- */
+    :root {
+      --azul-oscuro: #0f172a;
+      --azul: #2563eb;
+      --gris: #6b7280;
+      --fondo: #f8fafc;
+      --blanco: #ffffff;
+      --max-width: 1100px;
+    }
+
+    /* ---------- RESET ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--fondo);
+      color: var(--azul-oscuro);
+      line-height: 1.6;
+    }
+
+    /* ---------- CABECERA ---------- */
+    header {
+      background: var(--azul-oscuro);
+      color: var(--blanco);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header img {
+      height: 60px;
+      width: auto;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: var(--blanco);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--azul);
+    }
+
+    /* ---------- HAMBURGER MENU (MOBILE) ---------- */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .menu-toggle div {
+      width: 25px;
+      height: 3px;
+      background: white;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+        flex-direction: column;
+        background: var(--azul-oscuro);
+        position: absolute;
+        top: 70px;
+        right: 0;
+        width: 100%;
+        padding: 1rem 0;
+      }
+      nav.active {
+        display: flex;
+      }
+      .menu-toggle {
+        display: flex;
+      }
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      background: linear-gradient(to right, #0f172a, #1e3a8a);
+      color: var(--blanco);
+      text-align: center;
+      padding: 6rem 1.5rem;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .hero h1 {
+      font-size: 2.3rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      color: #e5e7eb;
+    }
+
+    /* ---------- SECCIONES ---------- */
+    section {
+      max-width: var(--max-width);
+      margin: 4rem auto;
+      padding: 0 1.5rem;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+      border-left: 4px solid var(--azul);
+      padding-left: 10px;
+    }
+
+    section p {
+      color: var(--gris);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    /* ---------- NOSOTROS ---------- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    /* ---------- TARJETAS ---------- */
+    .card {
+      background: var(--blanco);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      color: var(--azul-oscuro);
+      margin-bottom: 0.75rem;
+    }
+
+    /* ---------- FORMULARIO ---------- */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      background: var(--blanco);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    input, textarea {
+      padding: 0.8rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+
+    button {
+      background: var(--azul);
+      color: var(--blanco);
+      border: none;
+      padding: 0.9rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #1e40af;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      background: var(--azul-oscuro);
+      color: #9ca3af;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    /* ---------- ANIMACIONES ---------- */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <img src="logo-placeholder.png" alt="Logotipo Adinolffi Capital Asset S.A. (Próximamente)">
+    <div class="menu-toggle" id="menu-toggle">
+      <div></div><div></div><div></div>
+    </div>
+    <nav id="menu">
+      <a href="#inicio">Inicio</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#inversiones">Inversiones</a>
+      <a href="#accionistas">Accionistas</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="inicio" class="hero">
+    <h1>Adinolffi Capital Asset S.A.</h1>
+    <p>Sociedad Anónima de inversiones enfocada en la preservación y crecimiento del capital familiar a través de la gestión profesional de activos financieros e inmobiliarios.</p>
+  </section>
+
+  <!-- NOSOTROS -->
+  <section id="nosotros">
+    <h2>Nosotros</h2>
+    <div class="grid">
+      <div>
+        <h3>Misión</h3>
+        <p>Preservar, administrar y aumentar el capital patrimonial y financiero de la familia Adinolffi mediante una gestión responsable y eficiente de inversiones en títulos valores, acciones, bonos, CDAs e inmuebles. Nos guiamos por la prudencia, transparencia y sostenibilidad, fortaleciendo un legado financiero sólido.</p>
+      </div>
+      <div>
+        <h3>Visión</h3>
+        <p>Ser una sociedad de inversiones referente en el mercado financiero paraguayo, reconocida por su solidez, ética y excelencia en gestión de activos. Aspiramos a expandirnos hacia nuevos rubros estratégicos, promoviendo innovación, rentabilidad y desarrollo sostenible.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INVERSIONES -->
+  <section id="inversiones">
+    <h2>Nuestras Inversiones</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Mercado de Valores</h3>
+        <p>Participación activa en la Bolsa de Valores de Asunción mediante carteras diversificadas en acciones, bonos y CDAs, priorizando inversiones seguras y de rendimiento sostenido.</p>
+      </div>
+      <div class="card">
+        <h3>Inversiones Inmobiliarias</h3>
+        <p>Selección estratégica de activos inmobiliarios con alto potencial de valorización, buscando equilibrio entre estabilidad patrimonial y rentabilidad proyectada.</p>
+      </div>
+      <div class="card">
+        <h3>Diversificación y Crecimiento</h3>
+        <p>Proyección hacia nuevos sectores una vez consolidada la gestión de cartera, con visión de expansión sostenible y generación de valor a largo plazo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCIONISTAS -->
+  <section id="accionistas">
+    <h2>Accionistas</h2>
+    <p><strong>Ángel Armando Adinolffi Peralta</strong> — 99% de las acciones</p>
+    <p><strong>Alicia Alessandra Adinolffi Peralta</strong> — 1% de las acciones</p>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <h2>Contacto</h2>
+    <form onsubmit="event.preventDefault(); alert('Gracias por su mensaje. Nos pondremos en contacto pronto.');">
+      <input type="text" name="nombre" placeholder="Nombre completo" required />
+      <input type="email" name="email" placeholder="Correo electrónico" required />
+      <textarea name="mensaje" rows="5" placeholder="Escriba su mensaje..." required></textarea>
+      <button type="submit">Enviar mensaje</button>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2025 Adinolffi Capital Asset S.A. — Todos los derechos reservados.
+  </footer>
+
+  <script>
+    // MENU RESPONSIVE
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+    toggle.addEventListener('click', () => menu.classList.toggle('active'));
+  </script>
+</body>
+</html>
