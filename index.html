@@ -1,316 +1,705 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Adinolffi Capital Asset S.A.</title>
+  <meta name="description" content="Adinolffi Capital Asset S.A. - Gestión profesional de inversiones y preservación del capital familiar. Bolsa de Valores, bonos, inmuebles y más." />
+  <meta name="keywords" content="inversiones, bolsa, bonos, inmobiliario, patrimonio, Paraguay, Asunción" />
+  <!-- Favicon (editable). Puedes reemplazar con tu propio icono -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230f172a'/><text x='50' y='56' font-size='42' text-anchor='middle' fill='white' font-family='Arial'>A</text></svg>">
 
   <style>
-    /* ---------- VARIABLES ---------- */
-    :root {
-      --azul-oscuro: #0f172a;
+    /* -------------------- VARIABLES / PALETA -------------------- */
+    :root{
+      --azul-oscuro: #0b1e3c;
       --azul: #2563eb;
+      --gris-oscuro: #374151;
       --gris: #6b7280;
-      --fondo: #f8fafc;
+      --fondo: #f7fafc;
       --blanco: #ffffff;
       --max-width: 1100px;
+      --radius: 12px;
+      --shadow: 0 6px 22px rgba(11,30,60,0.08);
     }
 
-    /* ---------- RESET ---------- */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* -------------------- RESET -------------------- */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:var(--gris-oscuro);
+      background:var(--fondo);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.6;
+    }
+    a { color:var(--azul); text-decoration:none; }
+    img { max-width:100%; display:block; }
+
+    /* -------------------- HEADER -------------------- */
+    header{
+      position:sticky; top:0; z-index:60;
+      background:linear-gradient(180deg, rgba(11,30,60,0.98), rgba(11,30,60,0.95));
+      color:var(--blanco);
+      display:flex; align-items:center; justify-content:space-between;
+      gap:1rem; padding:0.9rem 1.25rem;
+      box-shadow:0 2px 8px rgba(2,6,23,0.15);
+    }
+    .brand { display:flex; align-items:center; gap:0.75rem; }
+    .brand img { height:44px; width:auto; border-radius:8px; background:rgba(255,255,255,0.03); padding:6px; }
+    .brand h1 { font-size:1.05rem; letter-spacing:0.4px; margin:0; font-weight:700; color:var(--blanco); }
+    nav.desktop { display:flex; gap:1.15rem; align-items:center; }
+    nav.desktop a { color:rgba(255,255,255,0.95); font-weight:600; padding:6px 8px; border-radius:8px; }
+    nav.desktop a:hover { background:rgba(255,255,255,0.04); color:var(--azul); }
+
+    /* hamburger */
+    .menu-toggle{ display:none; width:42px; height:42px; align-items:center; justify-content:center; background:transparent; border-radius:8px; }
+    .menu-toggle:hover { background:rgba(255,255,255,0.03); cursor:pointer; }
+
+    /* -------------------- HERO -------------------- */
+    .hero{
+      background: linear-gradient(90deg, rgba(11,30,60,0.98) 0%, rgba(30,58,138,0.95) 100%);
+      color:var(--blanco);
+      padding:48px 1rem;
+      text-align:left;
+    }
+    .hero .container{ max-width:var(--max-width); margin:0 auto; display:flex; gap:2rem; align-items:center; flex-wrap:wrap; }
+    .hero h2{ font-size:2rem; margin-bottom:0.5rem; font-weight:700; }
+    .hero p{ color:rgba(255,255,255,0.90); max-width:720px; }
+
+    /* -------------------- LAYOUT SECTIONS -------------------- */
+    main{ max-width:var(--max-width); margin:30px auto; padding:0 16px; }
+    section{ margin-bottom:36px; }
+    section .section-inner{ background:var(--blanco); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; }
+    h3.section-title{ font-size:1.25rem; margin-bottom:12px; display:inline-block; padding-left:10px; border-left:4px solid var(--azul); color:var(--azul-oscuro); }
+
+    .two-col{ display:grid; grid-template-columns:1fr 360px; gap:20px; align-items:start; }
+    @media(max-width:980px){ .two-col{ grid-template-columns:1fr; } }
+
+    /* -------------------- GRID CARDS -------------------- */
+    .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; margin-top:12px; }
+
+    .card{ background:linear-gradient(180deg,#ffffff,#fbfdff); border-radius:10px; padding:18px; box-shadow:0 4px 18px rgba(11,30,60,0.04); transition:transform .18s ease, box-shadow .18s ease;}
+    .card:hover{ transform:translateY(-6px); box-shadow:0 10px 28px rgba(11,30,60,0.08); }
+
+    .muted{ color:var(--gris); font-size:0.95rem; }
+
+    /* -------------------- GOBIERNO CORPORATIVO -------------------- */
+    .profile{ display:flex; gap:12px; align-items:center; }
+    .avatar{ height:52px; width:52px; border-radius:10px; background:linear-gradient(135deg,var(--azul),var(--azul-oscuro)); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:18px; }
+    .profile .meta{ font-weight:600; color:var(--gris-oscuro); }
+    .role{ color:var(--gris); font-size:0.95rem; }
+
+    /* -------------------- CALCULADORAS -------------------- */
+    .calc-grid{ display:grid; grid-template-columns:1fr 380px; gap:20px; }
+    @media(max-width:980px){ .calc-grid{ grid-template-columns:1fr; } }
+
+    .form-row{ display:flex; gap:10px; margin-bottom:10px; }
+    .form-row input, .form-row select{ flex:1; padding:10px 12px; border-radius:8px; border:1px solid #e6e9ef; font-size:0.96rem; }
+    .btn { background:var(--azul); color:white; padding:10px 14px; border-radius:8px; border:none; font-weight:700; cursor:pointer; }
+    .btn.secondary{ background:transparent; color:var(--azul); border:1px solid rgba(37,99,235,0.17); }
+
+    .result { background:linear-gradient(180deg,#f8fafc,#ffffff); border-radius:10px; padding:14px; box-shadow:0 6px 18px rgba(11,30,60,0.04); }
+    .result .kpi{ display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px dashed #eef2ff; }
+    .result .kpi:last-child{ border-bottom:none; }
+    .small{ font-size:0.9rem; color:var(--gris); }
+
+    /* amortization table */
+    table{ width:100%; border-collapse:collapse; margin-top:12px; font-size:0.95rem; }
+    th, td{ padding:8px 6px; text-align:right; border-bottom:1px solid #f1f5f9; }
+    th:first-child, td:first-child{ text-align:left; }
+
+    /* -------------------- CONTACT / FOOTER -------------------- */
+    .contact-list{ display:flex; gap:12px; flex-direction:column; }
+    .legal{ font-size:0.88rem; color:var(--gris); text-align:center; padding:18px 8px; background:transparent; }
+
+    footer{ margin-top:26px; color:var(--gris); text-align:center; padding:18px 8px; font-size:0.92rem; }
+
+    /* -------------------- RESPONSIVE NAV MOBILE -------------------- */
+    @media(max-width:768px){
+      nav.desktop{ display:none; }
+      .menu-toggle{ display:flex; }
+      .mobile-nav{ display:none; position:absolute; right:12px; top:64px; background:var(--azul-oscuro); color:var(--blanco); border-radius:10px; box-shadow:0 8px 30px rgba(2,6,23,0.2); overflow:hidden; }
+      .mobile-nav a{ display:block; padding:12px 16px; color:var(--blanco); border-bottom:1px solid rgba(255,255,255,0.04); }
+      .mobile-nav a:last-child{ border-bottom:none; }
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--fondo);
-      color: var(--azul-oscuro);
-      line-height: 1.6;
-    }
-
-    /* ---------- CABECERA ---------- */
-    header {
-      background: var(--azul-oscuro);
-      color: var(--blanco);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    header img {
-      height: 60px;
-      width: auto;
-    }
-
-    nav {
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    nav a {
-      color: var(--blanco);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-
-    nav a:hover {
-      color: var(--azul);
-    }
-
-    /* ---------- HAMBURGER MENU (MOBILE) ---------- */
-    .menu-toggle {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-    }
-
-    .menu-toggle div {
-      width: 25px;
-      height: 3px;
-      background: white;
-    }
-
-    @media (max-width: 768px) {
-      nav {
-        display: none;
-        flex-direction: column;
-        background: var(--azul-oscuro);
-        position: absolute;
-        top: 70px;
-        right: 0;
-        width: 100%;
-        padding: 1rem 0;
-      }
-      nav.active {
-        display: flex;
-      }
-      .menu-toggle {
-        display: flex;
-      }
-    }
-
-    /* ---------- HERO ---------- */
-    .hero {
-      background: linear-gradient(to right, #0f172a, #1e3a8a);
-      color: var(--blanco);
-      text-align: center;
-      padding: 6rem 1.5rem;
-      animation: fadeIn 1.5s ease-in-out;
-    }
-
-    .hero h1 {
-      font-size: 2.3rem;
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-
-    .hero p {
-      font-size: 1.1rem;
-      max-width: 600px;
-      margin: 0 auto;
-      color: #e5e7eb;
-    }
-
-    /* ---------- SECCIONES ---------- */
-    section {
-      max-width: var(--max-width);
-      margin: 4rem auto;
-      padding: 0 1.5rem;
-      animation: fadeInUp 1s ease-in-out;
-    }
-
-    section h2 {
-      font-size: 1.8rem;
-      margin-bottom: 1.2rem;
-      border-left: 4px solid var(--azul);
-      padding-left: 10px;
-    }
-
-    section p {
-      color: var(--gris);
-      font-size: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    /* ---------- NOSOTROS ---------- */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
-
-    /* ---------- TARJETAS ---------- */
-    .card {
-      background: var(--blanco);
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-      transition: transform 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    .card h3 {
-      color: var(--azul-oscuro);
-      margin-bottom: 0.75rem;
-    }
-
-    /* ---------- FORMULARIO ---------- */
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      background: var(--blanco);
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-    }
-
-    input, textarea {
-      padding: 0.8rem;
-      border: 1px solid #d1d5db;
-      border-radius: 6px;
-      font-family: inherit;
-      font-size: 1rem;
-    }
-
-    button {
-      background: var(--azul);
-      color: var(--blanco);
-      border: none;
-      padding: 0.9rem;
-      border-radius: 6px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background: #1e40af;
-    }
-
-    /* ---------- FOOTER ---------- */
-    footer {
-      background: var(--azul-oscuro);
-      color: #9ca3af;
-      text-align: center;
-      padding: 1.5rem;
-      font-size: 0.9rem;
-    }
-
-    /* ---------- ANIMACIONES ---------- */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    /* small helpers */
+    .muted-sm{ font-size:0.88rem; color:var(--gris); }
+    .spaced{ margin-top:12px; }
   </style>
 </head>
-
 <body>
 
-  <!-- HEADER -->
+  <!-- ================= HEADER ================= -->
   <header>
-    <img src="logo-placeholder.png" alt="Logotipo Adinolffi Capital Asset S.A. (Próximamente)">
-    <div class="menu-toggle" id="menu-toggle">
-      <div></div><div></div><div></div>
+    <div class="brand">
+      <!-- EDITAR AQUÍ: reemplaza "logo-placeholder.png" por tu logo -->
+      <img src="logo-placeholder.png" alt="Logo Adinolffi Capital Asset S.A." onerror="this.style.display='none'"/>
+      <h1>Adinolffi Capital Asset S.A.</h1>
     </div>
-    <nav id="menu">
+
+    <nav class="desktop" aria-label="Navegación principal">
       <a href="#inicio">Inicio</a>
       <a href="#nosotros">Nosotros</a>
-      <a href="#inversiones">Inversiones</a>
-      <a href="#accionistas">Accionistas</a>
+      <a href="#estrategia">Estrategia</a>
+      <a href="#calculadoras">Calculadoras</a>
       <a href="#contacto">Contacto</a>
     </nav>
+
+    <button class="menu-toggle" id="menuBtn" aria-label="Abrir menú">
+      <!-- simple hamburger -->
+      <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="2" rx="1" fill="white"/><rect y="6" width="20" height="2" rx="1" fill="white"/><rect y="12" width="20" height="2" rx="1" fill="white"/></svg>
+    </button>
+
+    <!-- mobile nav (hidden on desktop) -->
+    <div class="mobile-nav" id="mobileNav" role="navigation" aria-hidden="true">
+      <a href="#inicio">Inicio</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#estrategia">Estrategia</a>
+      <a href="#calculadoras">Calculadoras</a>
+      <a href="#contacto">Contacto</a>
+    </div>
   </header>
 
-  <!-- HERO -->
-  <section id="inicio" class="hero">
-    <h1>Adinolffi Capital Asset S.A.</h1>
-    <p>Sociedad Anónima de inversiones enfocada en la preservación y crecimiento del capital familiar a través de la gestión profesional de activos financieros e inmobiliarios.</p>
-  </section>
+  <!-- ================= HERO ================= -->
+  <section id="inicio" class="hero" aria-labelledby="hero-title">
+    <div class="container">
+      <div style="flex:1; min-width:260px;">
+        <h2 id="hero-title">Adinolffi Capital Asset S.A.</h2>
+        <p class="muted-sm spaced">
+          Sociedad anónima dedicada a la preservación y crecimiento del capital patrimonial
+          y financiero de la familia, mediante una gestión profesional de activos en el mercado de valores e inmuebles.
+        </p>
 
-  <!-- NOSOTROS -->
-  <section id="nosotros">
-    <h2>Nosotros</h2>
-    <div class="grid">
-      <div>
-        <h3>Misión</h3>
-        <p>Preservar, administrar y aumentar el capital patrimonial y financiero de la familia Adinolffi mediante una gestión responsable y eficiente de inversiones en títulos valores, acciones, bonos, CDAs e inmuebles. Nos guiamos por la prudencia, transparencia y sostenibilidad, fortaleciendo un legado financiero sólido.</p>
+        <div style="margin-top:18px;">
+          <a href="#contacto" class="btn" style="margin-right:8px;">Contacto</a>
+          <a href="#calculadoras" class="btn secondary">Calculadoras</a>
+        </div>
       </div>
-      <div>
-        <h3>Visión</h3>
-        <p>Ser una sociedad de inversiones referente en el mercado financiero paraguayo, reconocida por su solidez, ética y excelencia en gestión de activos. Aspiramos a expandirnos hacia nuevos rubros estratégicos, promoviendo innovación, rentabilidad y desarrollo sostenible.</p>
-      </div>
-    </div>
-  </section>
 
-  <!-- INVERSIONES -->
-  <section id="inversiones">
-    <h2>Nuestras Inversiones</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>Mercado de Valores</h3>
-        <p>Participación activa en la Bolsa de Valores de Asunción mediante carteras diversificadas en acciones, bonos y CDAs, priorizando inversiones seguras y de rendimiento sostenido.</p>
-      </div>
-      <div class="card">
-        <h3>Inversiones Inmobiliarias</h3>
-        <p>Selección estratégica de activos inmobiliarios con alto potencial de valorización, buscando equilibrio entre estabilidad patrimonial y rentabilidad proyectada.</p>
-      </div>
-      <div class="card">
-        <h3>Diversificación y Crecimiento</h3>
-        <p>Proyección hacia nuevos sectores una vez consolidada la gestión de cartera, con visión de expansión sostenible y generación de valor a largo plazo.</p>
+      <div style="width:220px; text-align:right;">
+        <!-- espacio para logo grande o documento -->
+        <div style="background:rgba(255,255,255,0.04); border-radius:10px; padding:14px;">
+          <!-- EDITAR AQUÍ: AÑADIR LOGO -->
+          <img src="logo-placeholder.png" alt="Logo (próximamente)" style="max-height:120px; margin:auto;"/>
+          <p class="muted-sm" style="margin-top:8px;">Fundada: <!-- EDITAR AQUÍ: año de fundación --> 2025</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ACCIONISTAS -->
-  <section id="accionistas">
-    <h2>Accionistas</h2>
-    <p><strong>Ángel Armando Adinolffi Peralta</strong> — 99% de las acciones</p>
-    <p><strong>Alicia Alessandra Adinolffi Peralta</strong> — 1% de las acciones</p>
-  </section>
+  <main>
+    <!-- ================= NOSOTROS ================= -->
+    <section id="nosotros" aria-labelledby="nosotros-title">
+      <div class="section-inner">
+        <h3 class="section-title" id="nosotros-title">Nosotros</h3>
+        <div class="two-col spaced">
+          <div>
+            <h4 style="margin-bottom:8px;">Misión</h4>
+            <p class="muted">
+              Preservar, administrar y aumentar el capital patrimonial y financiero de la familia Adinolffi 
+              a través de una gestión responsable, analítica y eficiente de inversiones en títulos valores, acciones, bonos, CDAs e inmuebles. 
+              Buscamos maximizar el rendimiento del portafolio mediante decisiones fundamentadas en prudencia, transparencia y sostenibilidad.
+            </p>
 
-  <!-- CONTACTO -->
-  <section id="contacto">
-    <h2>Contacto</h2>
-    <form onsubmit="event.preventDefault(); alert('Gracias por su mensaje. Nos pondremos en contacto pronto.');">
-      <input type="text" name="nombre" placeholder="Nombre completo" required />
-      <input type="email" name="email" placeholder="Correo electrónico" required />
-      <textarea name="mensaje" rows="5" placeholder="Escriba su mensaje..." required></textarea>
-      <button type="submit">Enviar mensaje</button>
-    </form>
-  </section>
+            <h4 style="margin-top:14px; margin-bottom:8px;">Visión</h4>
+            <p class="muted">
+              Consolidarnos como una sociedad de inversiones referente en el mercado financiero paraguayo, 
+              reconocida por su solidez, ética y excelencia en gestión de activos. Aspiramos a expandirnos hacia nuevos rubros estratégicos
+              y posicionar a Adinolffi Capital Asset S.A. como un grupo empresarial líder en rentabilidad y desarrollo sostenible.
+            </p>
 
-  <!-- FOOTER -->
-  <footer>
-    © 2025 Adinolffi Capital Asset S.A. — Todos los derechos reservados.
-  </footer>
+            <h4 style="margin-top:14px; margin-bottom:8px;">Valores</h4>
+            <ul class="muted">
+              <li>Integridad y ética profesional.</li>
+              <li>Prudencia y gestión de riesgo.</li>
+              <li>Transparencia y gobernanza familiar.</li>
+              <li>Visión de largo plazo.</li>
+            </ul>
+          </div>
+
+          <aside>
+            <div class="card">
+              <h4 style="margin-bottom:8px;">Historia (breve)</h4>
+              <p class="muted-sm"> <!-- EDITAR AQUÍ -->
+                Adinolffi Capital Asset S.A. nace de la intención familiar de consolidar un patrimonio gestionado profesionalmente.
+                Espacio reservado para agregar una historia más extensa cuando esté disponible.
+              </p>
+
+              <hr style="margin:12px 0; border:none; border-top:1px solid #f1f5f9" />
+
+              <h4 style="margin-bottom:8px;">Datos institucionales</h4>
+              <p class="muted-sm"><strong>RUC / Registro:</strong> <!-- EDITAR AQUÍ: RUC --> 800-XXXX</p>
+              <p class="muted-sm"><strong>Domicilio:</strong> Asunción, Paraguay <!-- EDITAR AQUÍ si aplica --></p>
+              <p class="muted-sm"><strong>Correo:</strong> <a href="mailto:info@adinolfficapital.com">info@adinolfficapital.com</a> <!-- EDITAR --></p>
+              <p class="muted-sm"><strong>Teléfono:</strong> <!-- EDITAR AQUÍ --> +595 X XXXX XXXX</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ESTRATEGIA ================= -->
+    <section id="estrategia" aria-labelledby="estrategia-title">
+      <div class="section-inner">
+        <h3 class="section-title" id="estrategia-title">Estrategia de Inversión</h3>
+
+        <div class="grid">
+          <div class="card">
+            <h4>Enfoque</h4>
+            <p class="muted-sm">Diversificación entre renta fija, renta variable y activos inmobiliarios, priorizando instrumentos sólidos y análisis fundamentado.</p>
+          </div>
+
+          <div class="card">
+            <h4>Gestión de Riesgo</h4>
+            <p class="muted-sm">Política conservadora: límites de exposición por instrumento, control de liquidez y revisiones periódicas de la cartera.</p>
+          </div>
+
+          <div class="card">
+            <h4>Horizonte</h4>
+            <p class="muted-sm">Visión de mediano a largo plazo con meta de preservar capital y obtener retornos sostenibles.</p>
+          </div>
+
+          <div class="card">
+            <h4>Transparencia</h4>
+            <p class="muted-sm">Reporte anual a los accionistas y privacidad sobre decisiones estratégicas sensibles.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= GOBIERNO CORPORATIVO ================= -->
+    <section id="gobierno" aria-labelledby="gobierno-title">
+      <div class="section-inner">
+        <h3 class="section-title" id="gobierno-title">Gobierno Corporativo</h3>
+
+        <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start;">
+          <div style="flex:1; min-width:280px;">
+            <p class="muted">Estructura básica del directorio y roles. Campos editables para añadir más miembros o asesores cuando desees.</p>
+
+            <div style="margin-top:12px;">
+              <div class="profile">
+                <div class="avatar">AA</div>
+                <div>
+                  <div class="meta">Ángel Armando Adinolffi Peralta</div>
+                  <div class="role muted-sm">Presidente / Director de Inversiones — 99% acciones</div>
+                </div>
+              </div>
+
+              <div style="height:12px"></div>
+
+              <div class="profile">
+                <div class="avatar" style="background:linear-gradient(135deg,#8b9eff,#4b6ef6)">AL</div>
+                <div>
+                  <div class="meta">Alicia Alessandra Adinolffi Peralta</div>
+                  <div class="role muted-sm">Directora Administrativa — 1% acciones</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <aside style="width:320px;">
+            <div class="card">
+              <h4>Políticas internas</h4>
+              <p class="muted-sm">Declaración de cumplimiento y ética (editable). Espacio para políticas de inversión, conflicto de interés y confidencialidad.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CALCULADORAS ================= -->
+    <section id="calculadoras" aria-labelledby="calculadoras-title">
+      <div class="section-inner">
+        <h3 class="section-title" id="calculadoras-title">Calculadoras Financieras</h3>
+
+        <p class="muted-sm">Herramientas prácticas para estimar préstamos e inversiones. Los campos están en unidades anuales o mensuales según corresponda.</p>
+
+        <div class="calc-grid spaced">
+          <!-- LEFT: CALCULADORAS -->
+          <div>
+            <!-- ------- PRESTAMO ------- -->
+            <div class="card" style="margin-bottom:18px;">
+              <h4>Calculadora de Préstamos (cuota fija mensual)</h4>
+              <div style="margin-top:10px;">
+                <label class="small muted-sm">Monto del préstamo (moneda local)</label>
+                <input type="number" id="loanAmount" placeholder="Ej: 1000000" min="0" />
+
+                <div class="form-row" style="margin-top:8px;">
+                  <input type="number" id="loanRate" placeholder="Tasa anual (%) — Ej: 12" step="0.01" />
+                  <input type="number" id="loanTerm" placeholder="Plazo (años) — Ej: 5" step="1" />
+                </div>
+
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                  <button class="btn" onclick="calcLoan()">Calcular</button>
+                  <button class="btn secondary" onclick="resetLoan()">Limpiar</button>
+                </div>
+
+                <div id="loanResult" class="result spaced" style="display:none;">
+                  <div class="kpi"><div class="muted-sm">Cuota mensual</div><div id="loanMonthly" style="font-weight:800"></div></div>
+                  <div class="kpi"><div class="muted-sm">Total pagado</div><div id="loanTotal" style="font-weight:800"></div></div>
+                  <div class="kpi"><div class="muted-sm">Intereses totales</div><div id="loanInterest" style="font-weight:800"></div></div>
+
+                  <div style="margin-top:12px;">
+                    <label class="muted-sm">Mostrar tabla de amortización</label>
+                    <div style="margin-top:8px;">
+                      <button class="btn secondary" onclick="toggleAmort()">Alternar tabla</button>
+                    </div>
+                    <div id="amortTableWrap" style="display:none; margin-top:12px; max-height:320px; overflow:auto;">
+                      <table id="amortTable">
+                        <thead>
+                          <tr><th>Período</th><th>Cuota</th><th>Interés</th><th>Capital</th><th>Saldo</th></tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ------- INTERES SIMPLE ------- -->
+            <div class="card" style="margin-bottom:18px;">
+              <h4>Interés Simple</h4>
+              <div style="margin-top:10px;">
+                <label class="muted-sm">Capital inicial</label>
+                <input type="number" id="simplePrincipal" placeholder="Ej: 100000" min="0" />
+
+                <div class="form-row" style="margin-top:8px;">
+                  <input type="number" id="simpleRate" placeholder="Tasa anual (%)" step="0.01" />
+                  <input type="number" id="simpleTime" placeholder="Tiempo (años)" step="0.1" />
+                </div>
+
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                  <button class="btn" onclick="calcSimple()">Calcular</button>
+                  <button class="btn secondary" onclick="resetSimple()">Limpiar</button>
+                </div>
+
+                <div id="simpleResult" class="result spaced" style="display:none;">
+                  <div class="kpi"><div class="muted-sm">Interés</div><div id="simpleInterest" style="font-weight:800"></div></div>
+                  <div class="kpi"><div class="muted-sm">Total acumulado</div><div id="simpleTotal" style="font-weight:800"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ------- INTERES COMPUESTO ------- -->
+            <div class="card">
+              <h4>Interés Compuesto</h4>
+              <div style="margin-top:10px;">
+                <label class="muted-sm">Capital inicial</label>
+                <input type="number" id="compPrincipal" placeholder="Ej: 100000" min="0" />
+
+                <div class="form-row" style="margin-top:8px;">
+                  <input type="number" id="compRate" placeholder="Tasa anual (%)" step="0.01" />
+                  <input type="number" id="compTime" placeholder="Tiempo (años)" step="0.1" />
+                </div>
+
+                <div class="form-row" style="margin-top:8px;">
+                  <select id="compFreq">
+                    <option value="1">Capitalización anual</option>
+                    <option value="4">Trimestral</option>
+                    <option value="12" selected>Mensual</option>
+                    <option value="365">Diaria</option>
+                  </select>
+                  <input type="number" id="compExtra" placeholder="Aportes periódicos (opcional)" min="0" />
+                </div>
+
+                <div style="display:flex; gap:8px; margin-top:10px;">
+                  <button class="btn" onclick="calcCompound()">Calcular</button>
+                  <button class="btn secondary" onclick="resetCompound()">Limpiar</button>
+                </div>
+
+                <div id="compResult" class="result spaced" style="display:none;">
+                  <div class="kpi"><div class="muted-sm">Total acumulado</div><div id="compTotal" style="font-weight:800"></div></div>
+                  <div class="kpi"><div class="muted-sm">Interés ganado</div><div id="compInterest" style="font-weight:800"></div></div>
+
+                  <div id="compBreakdown" style="margin-top:10px; display:none;">
+                    <p class="muted-sm">Desglose por periodo (primeros años):</p>
+                    <div id="compTableWrap" style="max-height:220px; overflow:auto;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT: INFORMACIÓN AUXILIAR -->
+          <aside>
+            <div class="card">
+              <h4>Indicadores y supuestos</h4>
+              <p class="muted-sm">
+                • Todas las calculadoras son aproximadas y para fines informativos. <br>
+                • Las tasas ingresadas se consideran en porcentaje anual (ej: 12 = 12%). <br>
+                • En préstamos, la cuota se calcula con tasa periódica mensual y esquema francés de amortización (cuota fija). <br>
+                • Puedes editar la información legal y de contacto más abajo cuando la tengas.
+              </p>
+            </div>
+
+            <div style="height:12px"></div>
+
+            <div class="card">
+              <h4>Atajos</h4>
+              <p class="muted-sm">Prueba ejemplos rápidos:</p>
+              <ul class="muted-sm">
+                <li>Préstamo: monto 1,000,000 / tasa 14% / plazo 10 años</li>
+                <li>Interés simple: 100,000 a 8% por 3 años</li>
+                <li>Interés compuesto: 50,000 a 10% anual, capitalización mensual por 5 años</li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACTO ================= -->
+    <section id="contacto" aria-labelledby="contacto-title">
+      <div class="section-inner">
+        <h3 class="section-title" id="contacto-title">Contacto</h3>
+
+        <div class="two-col">
+          <div>
+            <p class="muted-sm">Si deseas contacto institucional, consultas de inversión o información legal, completa el formulario o utiliza los datos de contacto.</p>
+
+            <form id="contactForm" onsubmit="event.preventDefault(); alert('Gracias — formulario demo: reemplazar envío por backend.');">
+              <div class="form-row">
+                <input type="text" id="contactName" placeholder="Nombre completo" required />
+                <input type="email" id="contactEmail" placeholder="Correo" required />
+              </div>
+              <div class="form-row">
+                <input type="tel" id="contactPhone" placeholder="Teléfono (opcional)" />
+                <input type="text" id="contactAsunto" placeholder="Asunto" />
+              </div>
+              <textarea id="contactMessage" rows="6" placeholder="Mensaje..." style="width:100%; padding:10px; border-radius:8px; border:1px solid #e6e9ef;"></textarea>
+
+              <div style="margin-top:10px;">
+                <button class="btn" type="submit">Enviar mensaje</button>
+                <button class="btn secondary" type="button" onclick="document.getElementById('contactForm').reset();">Limpiar</button>
+              </div>
+            </form>
+          </div>
+
+          <aside>
+            <div class="card contact-list">
+              <div><strong>Dirección:</strong> <!-- EDITAR AQUI --> Asunción, Paraguay</div>
+              <div><strong>Email:</strong> <a href="mailto:info@adinolfficapital.com">info@adinolfficapital.com</a></div>
+              <div><strong>Teléfono:</strong> <!-- EDITAR AQUI --> +595 X XXXX XXXX</div>
+              <div><strong>RUC / Registro:</strong> <!-- EDITAR AQUI --> 800-XXXX</div>
+              <div style="margin-top:8px;"><strong>Horario:</strong> Lun-Vie 9:00 - 17:00</div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER LEGAL ================= -->
+    <footer>
+      <div class="legal">
+        Adinolffi Capital Asset S.A. — Todos los derechos reservados © <span id="year"></span>. <br>
+        <!-- EDITAR: agregar aviso legal o política de privacidad cuando esté disponible -->
+        <small class="muted">La información en este sitio es orientativa y no constituye asesoramiento financiero personalizado.</small>
+      </div>
+    </footer>
+  </main>
 
   <script>
-    // MENU RESPONSIVE
-    const toggle = document.getElementById('menu-toggle');
-    const menu = document.getElementById('menu');
-    toggle.addEventListener('click', () => menu.classList.toggle('active'));
+    /* ============== UTILIDADES ============== */
+    const formatMoney = (v) => {
+      if (isNaN(v) || v === null) return '-';
+      return Number(v).toLocaleString('es-PY', { style:'currency', currency:'PYG', maximumFractionDigits: 0 });
+    };
+    const formatNumber = (v, decimals=2) => {
+      if (isNaN(v) || v === null) return '-';
+      return Number(v).toLocaleString('es-PY', { minimumFractionDigits: decimals, maximumFractionDigits:decimals });
+    };
+
+    // set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* ============== MENU MOBILE ============== */
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    let mobileOpen = false;
+    menuBtn.addEventListener('click', () => {
+      mobileOpen = !mobileOpen;
+      mobileNav.style.display = mobileOpen ? 'block' : 'none';
+      mobileNav.setAttribute('aria-hidden', !mobileOpen);
+    });
+
+    // Close mobile menu when clicking a link
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      mobileNav.style.display = 'none'; mobileOpen = false;
+    }));
+
+    /* ============== CALCULADORA PRESTAMO ============== */
+    function calcLoan(){
+      const P = parseFloat(document.getElementById('loanAmount').value) || 0;
+      const annualRate = parseFloat(document.getElementById('loanRate').value) || 0;
+      const years = parseFloat(document.getElementById('loanTerm').value) || 0;
+
+      if(P<=0 || annualRate<=0 || years<=0){ alert('Completar monto, tasa anual y plazo en años.'); return; }
+
+      const n = Math.round(years * 12); // meses
+      const r = (annualRate/100)/12; // tasa mensual decimal
+
+      // cuota mensual formula (anual -> mensual)
+      const monthly = (P * r) / (1 - Math.pow(1 + r, -n));
+      const totalPaid = monthly * n;
+      const totalInterest = totalPaid - P;
+
+      document.getElementById('loanMonthly').innerText = formatMoney(monthly);
+      document.getElementById('loanTotal').innerText = formatMoney(totalPaid);
+      document.getElementById('loanInterest').innerText = formatMoney(totalInterest);
+      document.getElementById('loanResult').style.display = 'block';
+
+      // build amortization table (but don't auto-show)
+      buildAmortizationSchedule(P, r, n, monthly);
+    }
+
+    function buildAmortizationSchedule(P, r, n, monthly){
+      const tbody = document.querySelector('#amortTable tbody');
+      tbody.innerHTML = '';
+      let balance = P;
+      for(let i=1;i<=n;i++){
+        const interest = balance * r;
+        const principal = monthly - interest;
+        balance = Math.max(0, balance - principal);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${i}</td>
+                        <td>${formatMoney(monthly)}</td>
+                        <td>${formatMoney(interest)}</td>
+                        <td>${formatMoney(principal)}</td>
+                        <td>${formatMoney(balance)}</td>`;
+        tbody.appendChild(tr);
+      }
+    }
+
+    function toggleAmort(){
+      const wrap = document.getElementById('amortTableWrap');
+      wrap.style.display = wrap.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function resetLoan(){
+      document.getElementById('loanAmount').value='';
+      document.getElementById('loanRate').value='';
+      document.getElementById('loanTerm').value='';
+      document.getElementById('loanResult').style.display='none';
+      document.querySelector('#amortTable tbody').innerHTML='';
+      document.getElementById('amortTableWrap').style.display='none';
+    }
+
+    /* ============== INTERES SIMPLE ============== */
+    function calcSimple(){
+      const P = parseFloat(document.getElementById('simplePrincipal').value) || 0;
+      const rate = parseFloat(document.getElementById('simpleRate').value) || 0;
+      const t = parseFloat(document.getElementById('simpleTime').value) || 0;
+      if(P<=0 || rate<=0 || t<=0){ alert('Completar capital, tasa y tiempo.'); return; }
+
+      const interest = P * (rate/100) * t;
+      const total = P + interest;
+
+      document.getElementById('simpleInterest').innerText = formatMoney(interest);
+      document.getElementById('simpleTotal').innerText = formatMoney(total);
+      document.getElementById('simpleResult').style.display='block';
+    }
+
+    function resetSimple(){
+      document.getElementById('simplePrincipal').value='';
+      document.getElementById('simpleRate').value='';
+      document.getElementById('simpleTime').value='';
+      document.getElementById('simpleResult').style.display='none';
+    }
+
+    /* ============== INTERES COMPUESTO ============== */
+    function calcCompound(){
+      const P = parseFloat(document.getElementById('compPrincipal').value) || 0;
+      const rate = parseFloat(document.getElementById('compRate').value) || 0;
+      const t = parseFloat(document.getElementById('compTime').value) || 0;
+      const freq = parseInt(document.getElementById('compFreq').value) || 12;
+      const aport = parseFloat(document.getElementById('compExtra').value) || 0;
+
+      if(P<=0 || rate<=0 || t<=0){ alert('Completar capital, tasa y tiempo.'); return; }
+
+      // fórmula con aportes periódicos (al final de cada periodo), n = freq por año
+      const n = freq;
+      const r = (rate/100)/n;
+      const periods = Math.round(n * t);
+
+      // Si aportes periódicos = 0, usar A = P*(1+r)^(n*t)
+      let A = 0;
+      if(aport <= 0){
+        A = P * Math.pow(1 + r, periods);
+      } else {
+        // con aportes periódicos al final de cada periodo (annuity)
+        const compoundP = P * Math.pow(1 + r, periods);
+        const annuity = aport * ((Math.pow(1 + r, periods) - 1) / r);
+        A = compoundP + annuity;
+      }
+
+      const interestEarned = A - P - (aport * periods);
+
+      document.getElementById('compTotal').innerText = formatMoney(A);
+      document.getElementById('compInterest').innerText = formatMoney(interestEarned);
+      document.getElementById('compResult').style.display='block';
+
+      // breakdown table (primeros años)
+      buildCompoundBreakdown(P, rate, t, n, aport);
+    }
+
+    function buildCompoundBreakdown(P, rate, t, n, aport){
+      const wrap = document.getElementById('compTableWrap');
+      wrap.innerHTML = '';
+      const periods = Math.round(n * t);
+      let balance = P;
+      const rowsToShow = Math.min(12, Math.ceil(periods / n)); // mostrar hasta 12 años o menos
+      let table = '<table><thead><tr><th>Año</th><th>Saldo al final del año</th></tr></thead><tbody>';
+      for(let year=1; year<=rowsToShow; year++){
+        for(let i=0;i<n;i++){
+          const r = (rate/100)/n;
+          // si hay aportes periódicos:
+          if(aport>0){
+            balance = (balance + aport) * (1 + r);
+          } else {
+            balance = balance * (1 + r);
+          }
+        }
+        table += `<tr><td style="text-align:left">${year}</td><td style="text-align:right">${formatMoney(balance)}</td></tr>`;
+      }
+      table += '</tbody></table>';
+      wrap.innerHTML = table;
+      document.getElementById('compBreakdown').style.display = 'block';
+    }
+
+    function resetCompound(){
+      document.getElementById('compPrincipal').value='';
+      document.getElementById('compRate').value='';
+      document.getElementById('compTime').value='';
+      document.getElementById('compFreq').value='12';
+      document.getElementById('compExtra').value='';
+      document.getElementById('compResult').style.display='none';
+      document.getElementById('compBreakdown').style.display='none';
+      document.getElementById('compTableWrap').innerHTML='';
+    }
+
+    /* Prevent non-sense input (simple UX) */
+    document.querySelectorAll('input[type="number"]').forEach(inp => {
+      inp.addEventListener('input', () => {
+        if(inp.value && Number(inp.value) < 0) inp.value = inp.value.replace('-','');
+      });
+    });
+
   </script>
+
+  <!-- ================= NOTAS ================= -->
+  <!--
+    INSTRUCCIONES DE EDICIÓN RÁPIDA:
+    - Reemplaza los comentarios <!-- EDITAR AQUÍ --> por los datos reales (RUC, dirección, logo, correo, teléfono, año de fundación).
+    - Si deseas separar CSS/JS, copia las secciones internas a archivos .css y .js y enlázalos.
+    - Para hacer el formulario de contacto real, conecta el <form> a tu backend o a un servicio de terceros (Formspree, Netlify Forms, etc).
+    - Para moneda y formato, actualmente usamos 'es-PY' y 'PYG' (Paraguay). Cambia según necesites.
+  -->
+
 </body>
 </html>
