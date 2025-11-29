@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adinolffi Capital Asset S.A.</title>
+  <meta name="description" content="Adinolffi Capital Asset S.A. - Empresa de gestión institucional y profesional de inversiones.">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-dark: #0b1e3c;
+      --primary: #1e3a8a;
+      --secondary: #2563eb;
+      --text-color: #1f2937;
+      --text-light: #6b7280;
+      --background: #f6f7f9;
+      --white: #ffffff;
+      --radius: 12px;
+      --shadow: 0 6px 22px rgba(11,30,60,0.08);
+      --max-width: 1200px;
+      --transition: 0.3s ease-in-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--background); color: var(--text-color); line-height: 1.6; scroll-behavior: smooth; }
+    a { text-decoration: none; color: var(--secondary); transition: color var(--transition); }
+    a:hover { color: var(--primary); }
+
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--primary-dark);
+      color: var(--white);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .brand { display: flex; align-items: center; gap: 0.75rem; }
+    .brand img { height: 50px; border-radius: 10px; background: rgba(255,255,255,0.05); padding: 5px; }
+    .brand h1 { font-size: 1.3rem; font-weight: 700; }
+
+    nav.desktop { display: flex; gap: 1.5rem; }
+    nav.desktop a { font-weight: 600; }
+    nav.desktop a:hover { color: #60a5fa; }
+
+    .menu-toggle { display: none; cursor: pointer; background: transparent; border: none; font-size: 1.5rem; color: var(--white); }
+    .mobile-nav { display: none; position: absolute; top: 70px; right: 2rem; background: var(--primary-dark); border-radius: var(--radius); flex-direction: column; overflow: hidden; }
+    .mobile-nav a { padding: 12px 16px; display: block; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--white); }
+    .mobile-nav a:last-child { border: none; }
+
+    @media(max-width:768px) {
+      nav.desktop { display: none; }
+      .menu-toggle { display: flex; }
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: var(--white);
+      padding: 100px 2rem 80px 2rem;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 60vh;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero h2 { font-size: 2.8rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.2; }
+    .hero p { font-size: 1.2rem; max-width: 700px; line-height: 1.6; opacity: 0.9; }
+
+    main { max-width: var(--max-width); margin: 2rem auto; padding: 0 1.5rem; }
+    section { margin-bottom: 3rem; }
+    .section-inner {
+      background: var(--white);
+      padding: 2.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .section-inner:hover { transform: translateY(-5px); box-shadow: 0 12px 28px rgba(11,30,60,0.12); }
+
+    h3.section-title {
+      font-size: 1.6rem;
+      color: var(--primary-dark);
+      border-left: 4px solid var(--secondary);
+      padding-left: 12px;
+      margin-bottom: 1.2rem;
+    }
+    h4 { font-size: 1.2rem; color: var(--primary-dark); margin-top: 1rem; margin-bottom: 0.5rem; }
+
+    ul { list-style: disc inside; margin-top: 0.5rem; }
+
+    footer { text-align: center; color: var(--text-light); padding: 25px 10px; font-size: 0.95rem; border-top: 1px solid rgba(0,0,0,0.05); }
+
+    /* Fade-in animation */
+    .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+    .fade-up.show { opacity: 1; transform: translateY(0); }
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <img src="logo-placeholder.png" alt="Logo Adinolffi">
+    <h1>Adinolffi Capital Asset S.A.</h1>
+  </div>
+  <nav class="desktop">
+    <a href="#inicio">Inicio</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+  <button class="menu-toggle" id="menuBtn">☰</button>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#inicio">Inicio</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+</header>
+
+<section id="inicio" class="hero fade-up">
+  <h2>Gestión profesional y crecimiento estratégico</h2>
+  <p>Adinolffi Capital Asset S.A. se centra en consolidar un capital de inversión relevante en Paraguay, mediante decisiones estratégicas y éticas que generan crecimiento sostenible desde su constitución.</p>
+</section>
+
+<main>
+  <!-- Nosotros -->
+  <section id="nosotros" class="fade-up">
+    <div class="section-inner">
+      <h3 class="section-title">Nosotros</h3>
+      <h4>Misión</h4>
+      <p>Generar y gestionar de manera profesional un capital sólido en Paraguay, mediante inversiones estratégicas en empresas, bonos, CDAs, inmuebles y otros negocios lícitos. Buscamos optimizar oportunidades de crecimiento, asegurando sostenibilidad y diversificación, mientras aplicamos procesos rigurosos y decisiones fundamentadas que fortalezcan el desarrollo de la empresa y su capacidad de inversión.</p>
+
+      <h4>Visión</h4>
+      <p>Convertirnos en un referente de inversión institucional en Paraguay, consolidando un capital de relevancia que permita participar en proyectos estratégicos de alto valor y diversificación. Aspiramos a expandir nuestra presencia mediante decisiones financieras inteligentes y éticas, generando crecimiento sostenido y contribuyendo al fortalecimiento del ecosistema económico nacional.</p>
+
+      <h4>Valores</h4>
+      <ul>
+        <li>Innovación</li>
+        <li>Integridad</li>
+        <li>Excelencia</li>
+      </ul>
+    </div>
+  </section>
+
+<!-- Contacto -->
+<section id="contacto" class="fade-up">
+  <div class="section-inner">
+    <h3 class="section-title">Contacto</h3>
+    <p><strong>Dirección:</strong> Capitan Cañiza e/ Patria Soberana y La Colonia, Luque</p>
+    <p><strong>Email:</strong> <a href="mailto:contacto@adinolfficapitalasset.com.py">contacto@adinolfficapitalasset.com.py</a></p>
+    <p><strong>Teléfono / WhatsApp:</strong> <a href="https://wa.me/595992319642" target="_blank">(0992) 319642</a></p>
+    <p><strong>Horario:</strong> Lunes a viernes, 08:00 a 18:00 horas</p>
+    <p><strong>Fundación:</strong> 06/10/2025</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  © 2025 Adinolffi Capital Asset S.A. — Todos los derechos reservados.
+</footer>
+
+<script>
+  // Mobile menu toggle
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileNav = document.getElementById('mobileNav');
+  let open = false;
+  menuBtn.addEventListener('click', () => {
+    open = !open;
+    mobileNav.style.display = open ? 'flex' : 'none';
+  });
+
+  // Scroll reveal animation
+  const faders = document.querySelectorAll('.fade-up');
+  const appearOptions = { threshold: 0.2 };
+  const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('show');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, appearOptions);
+
+  faders.forEach(fader => { appearOnScroll.observe(fader); });
+</script>
+
+</body>
+</html>
