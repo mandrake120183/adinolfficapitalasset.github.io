@@ -1,364 +1,432 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Adinolffi Capital Asset S.A.</title>
-  <meta name="description" content="Adinolffi Capital Asset S.A. - Gestión profesional de inversiones y preservación del capital familiar. Bolsa de Valores, bonos, inmuebles y más." />
-  <meta name="keywords" content="inversiones, bolsa, bonos, inmobiliario, patrimonio, Paraguay, Asunción" />
-  <!-- Favicon (editable). Puedes reemplazar con tu propio icono -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230f172a'/><text x='50' y='56' font-size='42' text-anchor='middle' fill='white' font-family='Arial'>A</text></svg>">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adinolffi Capital Asset S.A.</title>
+<meta name="description" content="Adinolffi Capital Asset S.A. - Empresa de gestión institucional y profesional de inversiones.">
 
-  <style>
-    /* -------------------- VARIABLES / PALETA -------------------- */
-    :root{
-      --azul-oscuro: #0b1e3c;
-      --azul: #2563eb;
-      --gris-oscuro: #374151;
-      --gris: #6b7280;
-      --fondo: #f7fafc;
-      --blanco: #ffffff;
-      --max-width: 1100px;
-      --radius: 12px;
-      --shadow: 0 6px 22px rgba(11,30,60,0.08);
-    }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    /* -------------------- RESET -------------------- */
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      color:var(--gris-oscuro);
-      background:var(--fondo);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.6;
-    }
-    a { color:var(--azul); text-decoration:none; }
-    img { max-width:100%; display:block; }
+<style>
 
-    /* -------------------- HEADER -------------------- */
-    header{
-      position:sticky; top:0; z-index:60;
-      background:linear-gradient(180deg, rgba(11,30,60,0.98), rgba(11,30,60,0.95));
-      color:var(--blanco);
-      display:flex; align-items:center; justify-content:space-between;
-      gap:1rem; padding:0.9rem 1.25rem;
-      box-shadow:0 2px 8px rgba(2,6,23,0.15);
-    }
-    .brand { display:flex; align-items:center; gap:0.75rem; }
-    .brand img { height:44px; width:auto; border-radius:8px; background:rgba(255,255,255,0.03); padding:6px; }
-    .brand h1 { font-size:1.05rem; letter-spacing:0.4px; margin:0; font-weight:700; color:var(--blanco); }
-    nav.desktop { display:flex; gap:1.15rem; align-items:center; }
-    nav.desktop a { color:rgba(255,255,255,0.95); font-weight:600; padding:6px 8px; border-radius:8px; }
-    nav.desktop a:hover { background:rgba(255,255,255,0.04); color:var(--azul); }
+:root{
+--primary-dark:#1E2C42;
+--primary:#1E2C42;
+--secondary:#C8C8C8;
 
-    /* hamburger */
-    .menu-toggle{ display:none; width:42px; height:42px; align-items:center; justify-content:center; background:transparent; border-radius:8px; }
-    .menu-toggle:hover { background:rgba(255,255,255,0.03); cursor:pointer; }
+--text-color:#1E2C42;
+--text-light:#6b7280;
 
-    /* -------------------- HERO -------------------- */
-    .hero{
-      background: linear-gradient(90deg, rgba(11,30,60,0.98) 0%, rgba(30,58,138,0.95) 100%);
-      color:var(--blanco);
-      padding:48px 1rem;
-      text-align:left;
-    }
-    .hero .container{ max-width:var(--max-width); margin:0 auto; display:flex; gap:2rem; align-items:center; flex-wrap:wrap; }
-    .hero h2{ font-size:2rem; margin-bottom:0.5rem; font-weight:700; }
-    .hero p{ color:rgba(255,255,255,0.90); max-width:720px; }
+--background:#F5F6F8;
+--white:#FFFFFF;
 
-    /* -------------------- LAYOUT SECTIONS -------------------- */
-    main{ max-width:var(--max-width); margin:30px auto; padding:0 16px; }
-    section{ margin-bottom:36px; }
-    section .section-inner{ background:var(--blanco); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; }
-    h3.section-title{ font-size:1.25rem; margin-bottom:12px; display:inline-block; padding-left:10px; border-left:4px solid var(--azul); color:var(--azul-oscuro); }
+--radius:12px;
+--shadow:0 6px 22px rgba(30,44,66,0.08);
 
-    .two-col{ display:grid; grid-template-columns:1fr 360px; gap:20px; align-items:start; }
-    @media(max-width:980px){ .two-col{ grid-template-columns:1fr; } }
+--max-width:1200px;
+--transition:0.3s ease-in-out;
+}
 
-    /* -------------------- GRID CARDS -------------------- */
-    .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; margin-top:12px; }
+*{box-sizing:border-box;margin:0;padding:0;}
 
-    .card{ background:linear-gradient(180deg,#ffffff,#fbfdff); border-radius:10px; padding:18px; box-shadow:0 4px 18px rgba(11,30,60,0.04); transition:transform .18s ease, box-shadow .18s ease;}
-    .card:hover{ transform:translateY(-6px); box-shadow:0 10px 28px rgba(11,30,60,0.08); }
+body{
+font-family:'Inter',sans-serif;
+background:var(--background);
+color:var(--text-color);
+line-height:1.6;
+scroll-behavior:smooth;
+}
 
-    .muted{ color:var(--gris); font-size:0.95rem; }
+a{
+text-decoration:none;
+color:var(--primary-dark);
+transition:color var(--transition);
+}
 
-    /* -------------------- GOBIERNO CORPORATIVO -------------------- */
-    .profile{ display:flex; gap:12px; align-items:center; }
-    .avatar{ height:52px; width:52px; border-radius:10px; background:linear-gradient(135deg,var(--azul),var(--azul-oscuro)); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:18px; }
-    .profile .meta{ font-weight:600; color:var(--gris-oscuro); }
-    .role{ color:var(--gris); font-size:0.95rem; }
+a:hover{
+color:var(--secondary);
+}
 
-    /* -------------------- CONTACT / FOOTER -------------------- */
-    .contact-list{ display:flex; gap:12px; flex-direction:column; }
-    .legal{ font-size:0.88rem; color:var(--gris); text-align:center; padding:18px 8px; background:transparent; }
+/* HEADER */
 
-    footer{ margin-top:26px; color:var(--gris); text-align:center; padding:18px 8px; font-size:0.92rem; }
+header{
+position:sticky;
+top:0;
+z-index:100;
 
-    /* -------------------- RESPONSIVE NAV MOBILE -------------------- */
-    @media(max-width:768px){
-      nav.desktop{ display:none; }
-      .menu-toggle{ display:flex; }
-      .mobile-nav{ display:none; position:absolute; right:12px; top:64px; background:var(--azul-oscuro); color:var(--blanco); border-radius:10px; box-shadow:0 8px 30px rgba(2,6,23,0.2); overflow:hidden; }
-      .mobile-nav a{ display:block; padding:12px 16px; color:var(--blanco); border-bottom:1px solid rgba(255,255,255,0.04); }
-      .mobile-nav a:last-child{ border-bottom:none; }
-    }
+background:var(--primary-dark);
+color:var(--white);
 
-    /* small helpers */
-    .muted-sm{ font-size:0.88rem; color:var(--gris); }
-    .spaced{ margin-top:12px; }
-  </style>
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:1rem 2rem;
+
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
+border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:0.8rem;
+}
+
+.brand img{
+height:48px;
+}
+
+.brand h1{
+font-size:1.2rem;
+font-weight:700;
+letter-spacing:0.4px;
+}
+
+nav.desktop{
+display:flex;
+gap:1.5rem;
+}
+
+nav.desktop a{
+font-weight:600;
+color:var(--white);
+}
+
+nav.desktop a:hover{
+color:var(--secondary);
+}
+
+.menu-toggle{
+display:none;
+cursor:pointer;
+background:transparent;
+border:none;
+font-size:1.5rem;
+color:var(--white);
+}
+
+.mobile-nav{
+display:none;
+position:absolute;
+top:70px;
+right:2rem;
+background:var(--primary-dark);
+border-radius:var(--radius);
+flex-direction:column;
+overflow:hidden;
+}
+
+.mobile-nav a{
+padding:12px 16px;
+display:block;
+border-bottom:1px solid rgba(255,255,255,0.1);
+color:var(--white);
+}
+
+.mobile-nav a:last-child{
+border:none;
+}
+
+@media(max-width:768px){
+
+nav.desktop{display:none;}
+
+.menu-toggle{display:flex;}
+
+}
+
+/* HERO */
+
+.hero{
+
+background:var(--primary-dark);
+
+color:var(--white);
+
+padding:110px 2rem 90px 2rem;
+
+text-align:left;
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+
+min-height:60vh;
+
+position:relative;
+overflow:hidden;
+}
+
+.hero h2{
+font-size:2.8rem;
+font-weight:700;
+margin-bottom:1rem;
+line-height:1.2;
+}
+
+.hero p{
+font-size:1.2rem;
+max-width:700px;
+line-height:1.6;
+opacity:0.9;
+}
+
+/* MAIN */
+
+main{
+max-width:var(--max-width);
+margin:2rem auto;
+padding:0 1.5rem;
+}
+
+section{
+margin-bottom:3rem;
+}
+
+.section-inner{
+
+background:var(--white);
+
+padding:2.5rem;
+
+border-radius:var(--radius);
+
+box-shadow:var(--shadow);
+
+transition:transform var(--transition),box-shadow var(--transition);
+
+}
+
+.section-inner:hover{
+
+transform:translateY(-5px);
+
+box-shadow:0 12px 28px rgba(30,44,66,0.12);
+
+}
+
+h3.section-title{
+
+font-size:1.6rem;
+
+color:var(--primary-dark);
+
+border-left:4px solid var(--primary-dark);
+
+padding-left:12px;
+
+margin-bottom:1.2rem;
+
+}
+
+h4{
+
+font-size:1.2rem;
+
+color:var(--primary-dark);
+
+margin-top:1rem;
+
+margin-bottom:0.5rem;
+
+}
+
+ul{
+list-style:disc inside;
+margin-top:0.5rem;
+}
+
+footer{
+
+text-align:center;
+
+color:var(--text-light);
+
+padding:25px 10px;
+
+font-size:0.95rem;
+
+border-top:1px solid rgba(0,0,0,0.05);
+
+background:var(--white);
+}
+
+/* ANIMATION */
+
+.fade-up{
+
+opacity:0;
+
+transform:translateY(20px);
+
+transition:opacity 0.8s ease-out, transform 0.8s ease-out;
+
+}
+
+.fade-up.show{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+</style>
 </head>
+
 <body>
 
-  <!-- ================= HEADER ================= -->
-  <header>
-    <div class="brand">
-      <!-- EDITAR: reemplaza "logo-placeholder.png" por tu logo -->
-      <img src="logo-placeholder.png" alt="Logo Adinolffi Capital Asset S.A." onerror="this.style.display='none'"/>
-      <h1>Adinolffi Capital Asset S.A.</h1>
-    </div>
+<header>
 
-    <nav class="desktop" aria-label="Navegación principal">
-      <a href="#inicio">Inicio</a>
-      <a href="#nosotros">Nosotros</a>
-      <a href="#estrategia">Estrategia</a>
-      <a href="#gobierno">Gobierno</a>
-      <a href="#contacto">Contacto</a>
-    </nav>
+<div class="brand">
+<img src="Isologo - Azul.PNG" alt="Adinolffi Capital Asset Logo">
+<h1>Adinolffi Capital Asset S.A.</h1>
+</div>
 
-    <button class="menu-toggle" id="menuBtn" aria-label="Abrir menú">
-      <!-- simple hamburger -->
-      <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="20" height="2" rx="1" fill="white"/><rect y="6" width="20" height="2" rx="1" fill="white"/><rect y="12" width="20" height="2" rx="1" fill="white"/></svg>
-    </button>
+<nav class="desktop">
+<a href="#inicio">Inicio</a>
+<a href="#nosotros">Nosotros</a>
+<a href="#contacto">Contacto</a>
+</nav>
 
-    <!-- mobile nav (hidden on desktop) -->
-    <div class="mobile-nav" id="mobileNav" role="navigation" aria-hidden="true">
-      <a href="#inicio">Inicio</a>
-      <a href="#nosotros">Nosotros</a>
-      <a href="#estrategia">Estrategia</a>
-      <a href="#gobierno">Gobierno</a>
-      <a href="#contacto">Contacto</a>
-    </div>
-  </header>
+<button class="menu-toggle" id="menuBtn">☰</button>
 
-  <!-- ================= HERO ================= -->
-  <section id="inicio" class="hero" aria-labelledby="hero-title">
-    <div class="container">
-      <div style="flex:1; min-width:260px;">
-        <h2 id="hero-title">Adinolffi Capital Asset S.A.</h2>
-        <p class="muted-sm spaced">
-          Sociedad anónima dedicada a la preservación y crecimiento del capital patrimonial
-          y financiero de la familia, mediante una gestión profesional de activos en el mercado de valores e inmuebles.
-        </p>
+<div class="mobile-nav" id="mobileNav">
+<a href="#inicio">Inicio</a>
+<a href="#nosotros">Nosotros</a>
+<a href="#contacto">Contacto</a>
+</div>
 
-        <div style="margin-top:18px;">
-          <a href="#contacto" class="btn" style="margin-right:8px; background:var(--azul); color:white; padding:10px 14px; border-radius:8px; font-weight:700;">Contacto</a>
-        </div>
-      </div>
+</header>
 
-      <div style="width:220px; text-align:right;">
-        <!-- espacio para logo grande o documento -->
-        <div style="background:rgba(255,255,255,0.04); border-radius:10px; padding:14px;">
-          <!-- EDITAR: AÑADIR LOGO -->
-          <img src="logo-placeholder.png" alt="Logo (próximamente)" style="max-height:120px; margin:auto;"/>
-          <p class="muted-sm" style="margin-top:8px;">Fundada: XXXXXXXXXXXXXXX</p>
-        </div>
-      </div>
-    </div>
-  </section>
+<section id="inicio" class="hero fade-up">
 
-  <main>
-    <!-- ================= NOSOTROS ================= -->
-    <section id="nosotros" aria-labelledby="nosotros-title">
-      <div class="section-inner">
-        <h3 class="section-title" id="nosotros-title">Nosotros</h3>
-        <div class="two-col spaced">
-          <div>
-            <h4 style="margin-bottom:8px;">Misión</h4>
-            <p class="muted">
-              Preservar, administrar y aumentar el capital patrimonial y financiero de la familia Adinolffi 
-              a través de una gestión responsable, analítica y eficiente de inversiones en títulos valores, acciones, bonos, CDAs e inmuebles. 
-              Buscamos maximizar el rendimiento del portafolio mediante decisiones fundamentadas en prudencia, transparencia y sostenibilidad.
-            </p>
+<h2>Gestión profesional y crecimiento estratégico</h2>
 
-            <h4 style="margin-top:14px; margin-bottom:8px;">Visión</h4>
-            <p class="muted">
-              Consolidarnos como una sociedad de inversiones referente en el mercado financiero paraguayo, 
-              reconocida por su solidez, ética y excelencia en gestión de activos. Aspiramos a expandirnos hacia nuevos rubros estratégicos, 
-              posicionando a Adinolffi Capital Asset S.A. como un grupo empresarial líder en rentabilidad y desarrollo sostenible.
-            </p>
+<p>
+Adinolffi Capital Asset S.A. se centra en consolidar un capital de inversión relevante en Paraguay, mediante decisiones estratégicas y éticas que generan crecimiento sostenible desde su constitución.
+</p>
 
-            <h4 style="margin-top:14px; margin-bottom:8px;">Valores</h4>
-            <ul class="muted">
-              <li>Integridad y ética profesional.</li>
-              <li>Prudencia y gestión de riesgo.</li>
-              <li>Transparencia y gobernanza familiar.</li>
-              <li>Visión de largo plazo.</li>
-            </ul>
-          </div>
+</section>
 
-          <aside>
-            <div class="card">
-              <h4 style="margin-bottom:8px;">Historia (breve)</h4>
-              <p class="muted-sm">
-                Adinolffi Capital Asset S.A. nace de la intención familiar de consolidar un patrimonio gestionado profesionalmente.
-                Espacio reservado para agregar una historia más extensa cuando esté disponible.
-              </p>
+<main>
 
-              <hr style="margin:12px 0; border:none; border-top:1px solid #f1f5f9" />
+<section id="nosotros" class="fade-up">
 
-              <h4 style="margin-bottom:8px;">Datos institucionales</h4>
-              <p class="muted-sm"><strong>RUC / Registro:</strong> XXXXXXXXXXXXXXX</p>
-              <p class="muted-sm"><strong>Domicilio:</strong> XXXXXXXXXXXXXXX</p>
-              <p class="muted-sm"><strong>Correo:</strong> XXXXXXXXXXXXXXX</p>
-              <p class="muted-sm"><strong>Teléfono:</strong> XXXXXXXXXXXXXXX</p>
-            </div>
-          </aside>
-        </div>
-      </div>
-    </section>
+<div class="section-inner">
 
-    <!-- ================= ESTRATEGIA ================= -->
-    <section id="estrategia" aria-labelledby="estrategia-title">
-      <div class="section-inner">
-        <h3 class="section-title" id="estrategia-title">Estrategia de Inversión</h3>
+<h3 class="section-title">Nosotros</h3>
 
-        <div class="grid">
-          <div class="card">
-            <h4>Enfoque</h4>
-            <p class="muted-sm">Diversificación entre renta fija, renta variable y activos inmobiliarios, priorizando instrumentos sólidos y análisis fundamentado.</p>
-          </div>
+<h4>Misión</h4>
 
-          <div class="card">
-            <h4>Gestión de Riesgo</h4>
-            <p class="muted-sm">Política conservadora: límites de exposición por instrumento, control de liquidez y revisiones periódicas de la cartera.</p>
-          </div>
+<p>
+Generar y gestionar de manera profesional un capital sólido en Paraguay, mediante inversiones estratégicas en empresas, bonos, CDAs, inmuebles y otros negocios lícitos. Buscamos optimizar oportunidades de crecimiento, asegurando sostenibilidad y diversificación, mientras aplicamos procesos rigurosos y decisiones fundamentadas que fortalezcan el desarrollo de la empresa y su capacidad de inversión.
+</p>
 
-          <div class="card">
-            <h4>Horizonte</h4>
-            <p class="muted-sm">Visión de mediano a largo plazo con meta de preservar capital y obtener retornos sostenibles.</p>
-          </div>
+<h4>Visión</h4>
 
-          <div class="card">
-            <h4>Transparencia</h4>
-            <p class="muted-sm">Reporte anual a los accionistas y privacidad sobre decisiones estratégicas sensibles.</p>
-          </div>
-        </div>
+<p>
+Convertirnos en un referente de inversión institucional en Paraguay, consolidando un capital de relevancia que permita participar en proyectos estratégicos de alto valor y diversificación. Aspiramos a expandir nuestra presencia mediante decisiones financieras inteligentes y éticas, generando crecimiento sostenido y contribuyendo al fortalecimiento del ecosistema económico nacional.
+</p>
 
-      </div>
-    </section>
+<h4>Valores</h4>
 
-    <!-- ================= GOBIERNO CORPORATIVO ================= -->
-    <section id="gobierno" aria-labelledby="gobierno-title">
-      <div class="section-inner">
-        <h3 class="section-title" id="gobierno-title">Gobierno Corporativo</h3>
+<ul>
+<li>Innovación</li>
+<li>Integridad</li>
+<li>Excelencia</li>
+</ul>
 
-        <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start;">
-          <div style="flex:1; min-width:280px;">
-            <p class="muted">Estructura básica del directorio y roles. Campos editables para añadir más miembros o asesores cuando desees.</p>
+<h4>Filosofía</h4>
 
-            <div style="margin-top:12px;">
-              <div class="profile">
-                <div class="avatar">AA</div>
-                <div>
-                  <div class="meta">Ángel Armando Adinolffi Peralta</div>
-                  <div class="role muted-sm">Presidente / Director de Inversiones — 99% acciones</div>
-                </div>
-              </div>
+<p>
+La identidad de Adinolffi Capital Asset S.A. se inspira en la solidez de la arquitectura clásica y en el símbolo del búho, representación histórica de sabiduría y análisis. Estos elementos reflejan nuestra forma de tomar decisiones: con visión estratégica, prudencia y enfoque en el largo plazo.
+</p>
 
-              <div style="height:12px"></div>
+</div>
 
-              <div class="profile">
-                <div class="avatar" style="background:linear-gradient(135deg,#8b9eff,#4b6ef6)">AL</div>
-                <div>
-                  <div class="meta">Alicia Alessandra Adinolffi Peralta</div>
-                  <div class="role muted-sm">Directora Administrativa — 1% acciones</div>
-                </div>
-              </div>
-            </div>
-          </div>
+</section>
 
-          <aside style="width:320px;">
-            <div class="card">
-              <h4>Políticas internas</h4>
-              <p class="muted-sm">Declaración de cumplimiento y ética (editable). Espacio para políticas de inversión, conflicto de interés y confidencialidad.</p>
-            </div>
-          </aside>
-        </div>
-      </div>
-    </section>
+<section id="contacto" class="fade-up">
 
-    <!-- ================= CONTACTO ================= -->
-    <section id="contacto" aria-labelledby="contacto-title">
-      <div class="section-inner">
-        <h3 class="section-title" id="contacto-title">Contacto</h3>
+<div class="section-inner">
 
-        <div class="two-col">
-          <div>
-            <p class="muted-sm">Si deseas contacto institucional, consultas de inversión o información legal, completa el formulario o utiliza los datos de contacto.</p>
+<h3 class="section-title">Contacto</h3>
 
-            <form id="contactForm" onsubmit="event.preventDefault(); alert('Gracias — formulario demo: reemplazar envío por backend.');">
-              <div class="form-row" style="display:flex; gap:10px; margin-bottom:10px;">
-                <input type="text" id="contactName" placeholder="Nombre completo" required style="flex:1; padding:10px; border-radius:8px; border:1px solid #e6e9ef;" />
-                <input type="email" id="contactEmail" placeholder="Correo" required style="flex:1; padding:10px; border-radius:8px; border:1px solid #e6e9ef;" />
-              </div>
-              <div class="form-row" style="display:flex; gap:10px; margin-bottom:10px;">
-                <input type="tel" id="contactPhone" placeholder="Teléfono (opcional)" style="flex:1; padding:10px; border-radius:8px; border:1px solid #e6e9ef;" />
-                <input type="text" id="contactAsunto" placeholder="Asunto" style="flex:1; padding:10px; border-radius:8px; border:1px solid #e6e9ef;" />
-              </div>
-              <textarea id="contactMessage" rows="6" placeholder="Mensaje..." style="width:100%; padding:10px; border-radius:8px; border:1px solid #e6e9ef;"></textarea>
+<p><strong>Dirección:</strong> Capitan Cañiza e/ Patria Soberana y La Colonia, Luque</p>
 
-              <div style="margin-top:10px;">
-                <button style="background:var(--azul); color:white; padding:10px 14px; border-radius:8px; border:none; font-weight:700; cursor:pointer;" type="submit">Enviar mensaje</button>
-                <button style="background:transparent; color:var(--azul); border:1px solid rgba(37,99,235,0.17); padding:10px 14px; border-radius:8px; margin-left:8px;" type="button" onclick="document.getElementById('contactForm').reset();">Limpiar</button>
-              </div>
-            </form>
-          </div>
+<p>
+<strong>Email:</strong>
+<a href="mailto:contacto@adinolfficapitalasset.com.py">
+contacto@adinolfficapitalasset.com.py
+</a>
+</p>
 
-          <aside>
-            <div class="card contact-list">
-              <div><strong>Dirección:</strong> XXXXXXXXXXXXXXX</div>
-              <div><strong>Email:</strong> XXXXXXXXXXXXXXX</div>
-              <div><strong>Teléfono:</strong> XXXXXXXXXXXXXXX</div>
-              <div><strong>RUC / Registro:</strong> XXXXXXXXXXXXXXX</div>
-              <div style="margin-top:8px;"><strong>Horario:</strong> XXXXXXXXXXXXXXX</div>
-            </div>
-          </aside>
-        </div>
-      </div>
-    </section>
+<p>
+<strong>Teléfono / WhatsApp:</strong>
+<a href="https://wa.me/595992319642" target="_blank">
+(0992) 319642
+</a>
+</p>
 
-    <!-- ================= FOOTER LEGAL ================= -->
-    <footer>
-      <div class="legal">
-        Adinolffi Capital Asset S.A. — Todos los derechos reservados © <span id="year"></span>. <br>
-        <small class="muted">La información en este sitio es orientativa y no constituye asesoramiento financiero personalizado.</small>
-      </div>
-    </footer>
-  </main>
+<p><strong>Horario:</strong> Lunes a viernes, 08:00 a 18:00 horas</p>
 
-  <script>
-    // set current year
-    document.getElementById('year').textContent = new Date().getFullYear();
+</div>
 
-    /* ============== MENU MOBILE ============== */
-    const menuBtn = document.getElementById('menuBtn');
-    const mobileNav = document.getElementById('mobileNav');
-    let mobileOpen = false;
-    menuBtn.addEventListener('click', () => {
-      mobileOpen = !mobileOpen;
-      mobileNav.style.display = mobileOpen ? 'block' : 'none';
-      mobileNav.setAttribute('aria-hidden', !mobileOpen);
-    });
+</section>
 
-    // Close mobile menu when clicking a link
-    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      mobileNav.style.display = 'none'; mobileOpen = false;
-    }));
-  </script>
+</main>
+
+<footer>
+
+© 2025 Adinolffi Capital Asset S.A. — Todos los derechos reservados.
+
+</footer>
+
+<script>
+
+const menuBtn=document.getElementById('menuBtn');
+const mobileNav=document.getElementById('mobileNav');
+
+let open=false;
+
+menuBtn.addEventListener('click',()=>{
+
+open=!open;
+
+mobileNav.style.display=open?'flex':'none';
+
+});
+
+const faders=document.querySelectorAll('.fade-up');
+
+const appearOptions={threshold:0.2};
+
+const appearOnScroll=new IntersectionObserver(function(entries,observer){
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add('show');
+
+observer.unobserve(entry.target);
+
+}
+
+});
+
+},appearOptions);
+
+faders.forEach(fader=>{
+
+appearOnScroll.observe(fader);
+
+});
+
+</script>
 
 </body>
 </html>
