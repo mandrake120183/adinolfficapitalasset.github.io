@@ -4,6 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Adinolffi Capital Asset S.A.</title>
 
 <meta name="description" content="Adinolffi Capital Asset S.A. - Empresa de gestión institucional y profesional de inversiones.">
@@ -14,23 +15,24 @@
 
 :root{
 --primary-dark:#1E2C42;
---primary:#1E2C42;
 --secondary:#C8C8C8;
+--background:#F5F6F8;
+--white:#FFFFFF;
 
 --text-color:#1E2C42;
 --text-light:#6b7280;
 
---background:#F5F6F8;
---white:#FFFFFF;
-
 --radius:12px;
 --shadow:0 6px 22px rgba(30,44,66,0.08);
-
 --max-width:1200px;
 --transition:0.3s ease-in-out;
 }
 
-*{box-sizing:border-box;margin:0;padding:0;}
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
 
 body{
 font-family:'Inter',sans-serif;
@@ -40,25 +42,16 @@ line-height:1.6;
 scroll-behavior:smooth;
 }
 
-a{
-text-decoration:none;
-color:var(--primary-dark);
-transition:color var(--transition);
-}
-
-a:hover{
-color:var(--secondary);
-}
-
 /* HEADER */
 
 header{
+
 position:sticky;
 top:0;
 z-index:100;
 
 background:var(--primary-dark);
-color:var(--white);
+color:white;
 
 display:flex;
 justify-content:space-between;
@@ -67,23 +60,22 @@ align-items:center;
 padding:1rem 2rem;
 
 box-shadow:0 4px 12px rgba(0,0,0,0.1);
-border-bottom:1px solid rgba(255,255,255,0.1);
 }
 
 .brand{
 display:flex;
 align-items:center;
-gap:0.8rem;
+gap:0.7rem;
 }
 
 .brand img{
-height:56px;
+height:50px;
 }
 
 .brand h1{
-font-size:1.2rem;
+font-size:1.1rem;
 font-weight:700;
-letter-spacing:0.4px;
+color:white;
 }
 
 nav.desktop{
@@ -92,8 +84,9 @@ gap:1.5rem;
 }
 
 nav.desktop a{
+color:white;
 font-weight:600;
-color:var(--white);
+text-decoration:none;
 }
 
 nav.desktop a:hover{
@@ -102,11 +95,11 @@ color:var(--secondary);
 
 .menu-toggle{
 display:none;
-cursor:pointer;
-background:transparent;
+background:none;
 border:none;
 font-size:1.5rem;
-color:var(--white);
+color:white;
+cursor:pointer;
 }
 
 .mobile-nav{
@@ -115,7 +108,7 @@ position:absolute;
 top:70px;
 right:2rem;
 background:var(--primary-dark);
-border-radius:var(--radius);
+border-radius:10px;
 flex-direction:column;
 overflow:hidden;
 }
@@ -124,7 +117,8 @@ overflow:hidden;
 padding:12px 16px;
 display:block;
 border-bottom:1px solid rgba(255,255,255,0.1);
-color:var(--white);
+color:white;
+text-decoration:none;
 }
 
 .mobile-nav a:last-child{
@@ -133,9 +127,13 @@ border:none;
 
 @media(max-width:768px){
 
-nav.desktop{display:none;}
+nav.desktop{
+display:none;
+}
 
-.menu-toggle{display:flex;}
+.menu-toggle{
+display:flex;
+}
 
 }
 
@@ -144,43 +142,48 @@ nav.desktop{display:none;}
 .hero{
 
 background:var(--primary-dark);
+color:white;
 
-color:var(--white);
+padding:140px 2rem;
 
-padding:120px 2rem 90px 2rem;
+text-align:center;
 
 display:flex;
 flex-direction:column;
+align-items:center;
 justify-content:center;
 
-min-height:65vh;
-
-position:relative;
-overflow:hidden;
+min-height:70vh;
 }
 
-.hero-logo{
+/* LOGO GRANDE */
+
+.hero-logo img{
+
+width:180px;
+height:auto;
+
 margin-bottom:35px;
 }
 
-.hero-logo img{
-height:120px;
-width:auto;
-filter:brightness(0) invert(1);
-opacity:0.95;
-}
+/* TITULO HERO */
 
 .hero h2{
-font-size:2.8rem;
+
+font-size:2.7rem;
 font-weight:700;
-margin-bottom:1rem;
-line-height:1.2;
+
+margin-bottom:1.2rem;
+
+max-width:700px;
 }
 
 .hero p{
+
 font-size:1.2rem;
+
 max-width:700px;
-line-height:1.6;
+
 opacity:0.9;
 }
 
@@ -198,7 +201,7 @@ margin-bottom:3rem;
 
 .section-inner{
 
-background:var(--white);
+background:white;
 
 padding:2.5rem;
 
@@ -207,7 +210,6 @@ border-radius:var(--radius);
 box-shadow:var(--shadow);
 
 transition:transform var(--transition),box-shadow var(--transition);
-
 }
 
 .section-inner:hover{
@@ -215,7 +217,6 @@ transition:transform var(--transition),box-shadow var(--transition);
 transform:translateY(-5px);
 
 box-shadow:0 12px 28px rgba(30,44,66,0.12);
-
 }
 
 h3.section-title{
@@ -229,25 +230,24 @@ border-left:4px solid var(--primary-dark);
 padding-left:12px;
 
 margin-bottom:1.2rem;
-
 }
 
 h4{
 
 font-size:1.2rem;
 
-color:var(--primary-dark);
-
 margin-top:1rem;
-
 margin-bottom:0.5rem;
 
+color:var(--primary-dark);
 }
 
 ul{
 list-style:disc inside;
 margin-top:0.5rem;
 }
+
+/* FOOTER */
 
 footer{
 
@@ -261,27 +261,20 @@ font-size:0.95rem;
 
 border-top:1px solid rgba(0,0,0,0.05);
 
-background:var(--white);
+background:white;
 }
 
-/* ANIMATIONS */
+/* ANIMACION */
 
 .fade-up{
-
 opacity:0;
-
 transform:translateY(20px);
-
 transition:opacity 0.8s ease-out, transform 0.8s ease-out;
-
 }
 
 .fade-up.show{
-
 opacity:1;
-
 transform:translateY(0);
-
 }
 
 </style>
@@ -293,8 +286,8 @@ transform:translateY(0);
 <header>
 
 <div class="brand">
-<img src="Isologo - Azul.PNG" alt="Adinolffi Capital Asset">
-<h1>Adinolffi Capital Asset S.A.</h1>
+<img src="Isologo - Azul.PNG" alt="Adinolffi">
+<h1>Adinolffi Capital Asset</h1>
 </div>
 
 <nav class="desktop">
@@ -322,7 +315,7 @@ transform:translateY(0);
 <h2>Gestión profesional y crecimiento estratégico</h2>
 
 <p>
-Adinolffi Capital Asset S.A. se centra en consolidar un capital de inversión relevante en Paraguay, mediante decisiones estratégicas y éticas que generan crecimiento sostenible desde su constitución.
+Adinolffi Capital Asset S.A. se centra en consolidar un capital de inversión relevante en Paraguay, mediante decisiones estratégicas y éticas que generan crecimiento sostenible.
 </p>
 
 </section>
@@ -338,13 +331,13 @@ Adinolffi Capital Asset S.A. se centra en consolidar un capital de inversión re
 <h4>Misión</h4>
 
 <p>
-Generar y gestionar de manera profesional un capital sólido en Paraguay, mediante inversiones estratégicas en empresas, bonos, CDAs, inmuebles y otros negocios lícitos. Buscamos optimizar oportunidades de crecimiento, asegurando sostenibilidad y diversificación, mientras aplicamos procesos rigurosos y decisiones fundamentadas que fortalezcan el desarrollo de la empresa y su capacidad de inversión.
+Generar y gestionar de manera profesional un capital sólido en Paraguay mediante inversiones estratégicas en empresas, bonos, CDAs, inmuebles y otros negocios lícitos.
 </p>
 
 <h4>Visión</h4>
 
 <p>
-Convertirnos en un referente de inversión institucional en Paraguay, consolidando un capital de relevancia que permita participar en proyectos estratégicos de alto valor y diversificación. Aspiramos a expandir nuestra presencia mediante decisiones financieras inteligentes y éticas, generando crecimiento sostenido y contribuyendo al fortalecimiento del ecosistema económico nacional.
+Convertirnos en un referente de inversión institucional en Paraguay mediante decisiones financieras inteligentes y éticas.
 </p>
 
 <h4>Valores</h4>
@@ -358,7 +351,7 @@ Convertirnos en un referente de inversión institucional en Paraguay, consolidan
 <h4>Filosofía</h4>
 
 <p>
-La identidad de Adinolffi Capital Asset S.A. se inspira en la solidez de la arquitectura clásica y en el símbolo del búho, representación histórica de sabiduría y análisis. Estos elementos reflejan nuestra forma de tomar decisiones: con visión estratégica, prudencia y enfoque en el largo plazo.
+La identidad de Adinolffi Capital Asset se inspira en la solidez de la arquitectura clásica y en el símbolo del búho, representación histórica de sabiduría y análisis estratégico.
 </p>
 
 </div>
