@@ -1,455 +1,622 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adinolffi Capital Asset S.A. — Gestión de Activos</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adinolffi Capital Asset S.A.</title>
+<meta name="description" content="Adinolffi Capital Asset S.A. — Gestión institucional y profesional de inversiones en Paraguay.">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Lato:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
 <style>
 :root {
-  --navy:#1E2C42;--navy-80:rgba(30,44,66,0.80);--navy-40:rgba(30,44,66,0.40);--navy-10:rgba(30,44,66,0.06);
-  --silver:#C8C8C8;--silver-40:rgba(200,200,200,0.40);--white:#FFFFFF;--off:#F6F7F9;--rule:rgba(30,44,66,0.12);
+  --ink: #0D1B2A;
+  --ink-mid: #1C2E42;
+  --gold: #B8975A;
+  --gold-light: #D4B483;
+  --cream: #F8F5EF;
+  --white: #FFFFFF;
+  --muted: #7A8695;
+  --border: rgba(184,151,90,0.2);
+  --max: 1160px;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Lato',sans-serif;font-weight:300;background:var(--white);color:var(--navy);overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--rule) 1px,transparent 1px),linear-gradient(90deg,var(--rule) 1px,transparent 1px);background-size:80px 80px;pointer-events:none;z-index:0;opacity:0.3}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 4rem;background:rgba(255,255,255,0.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--rule)}
-.nav-brand{display:flex;align-items:center;gap:1rem;text-decoration:none}
-.logo-slot{width:52px;height:52px;border:1px solid var(--silver);display:flex;align-items:center;justify-content:center;background:var(--navy-10);flex-shrink:0;overflow:hidden}
-.logo-slot img{width:100%;height:100%;object-fit:contain;padding:3px}
-.logo-slot-ph{font-size:9px;font-weight:300;letter-spacing:0.14em;text-transform:uppercase;color:var(--navy-40);text-align:center;line-height:1.4}
-.nav-text{display:flex;flex-direction:column}
-.nav-name{font-family:'Cinzel',serif;font-size:13px;font-weight:500;letter-spacing:0.14em;color:var(--navy);text-transform:uppercase;line-height:1.2}
-.nav-sub{font-size:10px;font-weight:300;letter-spacing:0.2em;color:var(--silver);text-transform:uppercase;margin-top:2px}
-.nav-links{display:flex;align-items:center;gap:2.6rem;list-style:none}
-.nav-links a{font-size:11px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--navy-80);text-decoration:none;transition:color .2s}
-.nav-links a:hover{color:var(--navy)}
-.nav-cta{font-family:'Cinzel',serif;font-size:10px!important;font-weight:500!important;color:var(--white)!important;background:var(--navy);padding:9px 22px!important;transition:background .22s!important}
-.nav-cta:hover{background:#2a3d5c!important;color:var(--white)!important}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
-.hamburger span{display:block;width:22px;height:1.5px;background:var(--navy)}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* HEADER */
+header {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(13,27,42,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(184,151,90,0.15);
+  padding: 0 2rem; height: 72px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+.brand img { height: 40px; width: auto; }
+.brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem; font-weight: 600; color: var(--white); letter-spacing: 0.03em; line-height: 1.2;
+}
+.brand-name span {
+  display: block; font-family: 'DM Sans', sans-serif;
+  font-size: 0.6rem; font-weight: 300; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--gold); margin-top: 1px;
+}
+nav.desktop { display: flex; gap: 2.5rem; align-items: center; }
+nav.desktop a {
+  color: rgba(255,255,255,0.72); text-decoration: none;
+  font-size: 0.8rem; font-weight: 400; letter-spacing: 0.1em;
+  text-transform: uppercase; transition: color 0.2s;
+}
+nav.desktop a:hover { color: var(--gold); }
+.nav-cta {
+  border: 1px solid var(--gold) !important;
+  color: var(--gold) !important;
+  padding: 0.42rem 1.1rem; border-radius: 2px;
+  transition: background 0.2s, color 0.2s !important;
+}
+.nav-cta:hover { background: var(--gold) !important; color: var(--ink) !important; }
+
+.menu-toggle {
+  display: none; flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 4px;
+}
+.menu-toggle span { display: block; width: 24px; height: 1.5px; background: white; transition: all 0.3s; }
+.mobile-nav {
+  display: none; position: absolute; top: 72px; left: 0; right: 0;
+  background: var(--ink); border-bottom: 1px solid var(--border);
+  flex-direction: column; padding: 1rem 2rem 1.5rem; gap: 0;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a {
+  color: rgba(255,255,255,0.75); text-decoration: none;
+  font-size: 0.88rem; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.85rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); transition: color 0.2s;
+}
+.mobile-nav a:last-child { border-bottom: none; }
+.mobile-nav a:hover { color: var(--gold); }
+
+@media (max-width: 768px) {
+  nav.desktop { display: none; }
+  .menu-toggle { display: flex; }
+}
 
 /* HERO */
-.hero{min-height:100vh;display:grid;grid-template-columns:1.1fr 0.9fr;padding-top:76px;position:relative;z-index:1}
-.hero-left{padding:7rem 4rem 7rem 5rem;display:flex;flex-direction:column;justify-content:center;position:relative}
-.hero-left::before{content:'';position:absolute;left:5rem;top:7rem;width:2px;height:56px;background:var(--navy);opacity:0.12}
-.hero-tag{font-size:10px;font-weight:400;letter-spacing:0.26em;text-transform:uppercase;color:var(--silver);margin-bottom:2.4rem}
-.hero-title{font-family:'Cinzel',serif;font-size:clamp(2.4rem,4vw,3.8rem);font-weight:400;line-height:1.15;letter-spacing:0.04em;color:var(--navy);margin-bottom:1.6rem;text-transform:uppercase}
-.hero-title span{display:block;font-size:0.5em;font-weight:400;letter-spacing:0.2em;color:var(--silver);margin-bottom:0.5rem}
-.hero-div{display:flex;align-items:center;gap:1rem;margin-bottom:2rem}
-.hero-div-line{width:80px;height:1px;background:var(--navy);opacity:0.18}
-.hero-div-dia{width:7px;height:7px;border:1.5px solid var(--navy);transform:rotate(45deg);opacity:0.3;flex-shrink:0}
-.hero-body{font-size:15px;font-weight:300;line-height:1.85;color:rgba(30,44,66,0.62);max-width:480px;margin-bottom:3rem}
-.hero-actions{display:flex;gap:1.4rem;align-items:center;flex-wrap:wrap}
-.btn-primary{font-family:'Cinzel',serif;font-size:10px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:var(--white);background:var(--navy);border:1.5px solid var(--navy);padding:14px 32px;text-decoration:none;transition:background .22s;display:inline-block}
-.btn-primary:hover{background:#2a3d5c;border-color:#2a3d5c}
-.btn-ghost{font-size:11px;font-weight:400;letter-spacing:0.16em;text-transform:uppercase;color:var(--navy);text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:2px;transition:border-color .2s}
-.btn-ghost:hover{border-color:var(--navy)}
+.hero {
+  background: var(--ink); min-height: 92vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 5rem 2rem 4rem; position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(184,151,90,0.04) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(184,151,90,0.04) 1px, transparent 1px);
+  background-size: 60px 60px; pointer-events: none;
+}
+.hero::after {
+  content: ''; position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(ellipse, rgba(184,151,90,0.07) 0%, transparent 70%);
+  top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none;
+}
+.hero-content { position: relative; z-index: 1; }
+.hero-logo { margin-bottom: 2.5rem; animation: fadeDown 0.9s ease both; }
+.hero-logo img {
+  width: min(400px, 76vw); height: auto;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.4));
+}
+.hero-eyebrow {
+  font-size: 0.7rem; font-weight: 400; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 1.2rem; animation: fadeUp 0.9s 0.2s ease both;
+}
+.hero h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 400; color: var(--white);
+  line-height: 1.15; max-width: 700px; margin: 0 auto 1.5rem;
+  animation: fadeUp 0.9s 0.35s ease both;
+}
+.hero h2 em { font-style: italic; color: var(--gold-light); }
+.hero-desc {
+  font-size: 1rem; color: rgba(255,255,255,0.55); max-width: 520px;
+  margin: 0 auto 2.8rem; font-weight: 300; line-height: 1.75;
+  animation: fadeUp 0.9s 0.5s ease both;
+}
+.hero-actions {
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  animation: fadeUp 0.9s 0.65s ease both;
+}
+.btn-primary {
+  background: var(--gold); color: var(--ink); padding: 0.85rem 2rem;
+  font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  text-decoration: none; border-radius: 2px; transition: background 0.2s, transform 0.15s;
+}
+.btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+.btn-outline {
+  background: transparent; color: rgba(255,255,255,0.65); padding: 0.85rem 2rem;
+  font-size: 0.8rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+  text-decoration: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 2px;
+  transition: border-color 0.2s, color 0.2s, transform 0.15s;
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+.hero-scroll {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: rgba(255,255,255,0.3); font-size: 0.66rem; letter-spacing: 0.15em;
+  text-transform: uppercase; animation: fadeUp 1.2s 1s ease both;
+}
+.scroll-line {
+  width: 1px; height: 36px;
+  background: linear-gradient(to bottom, rgba(184,151,90,0.5), transparent);
+  animation: scrollPulse 2s infinite;
+}
 
-/* HERO RIGHT */
-.hero-right{background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.hero-right::before{content:'';position:absolute;inset:40px;border:1px solid rgba(200,200,200,0.08);pointer-events:none}
-.hero-right::after{content:'';position:absolute;inset:58px;border:1px solid rgba(200,200,200,0.05);pointer-events:none}
-.hero-bg{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(200,200,200,0.04) 80px),repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(200,200,200,0.04) 80px);pointer-events:none}
-.hero-logo-area{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center}
-.logo-main{width:220px;height:220px;border:1.5px solid rgba(200,200,200,0.22);display:flex;align-items:center;justify-content:center;position:relative;background:rgba(255,255,255,0.03)}
-.logo-main::before,.logo-main::after{content:'';position:absolute;border:1px solid rgba(200,200,200,0.09)}
-.logo-main::before{inset:-12px}
-.logo-main::after{inset:-22px}
-.logo-main img{width:88%;height:88%;object-fit:contain}
-.logo-main-ph{text-align:center;padding:1rem}
-.logo-main-ph-text{font-size:10px;font-weight:300;letter-spacing:0.22em;text-transform:uppercase;color:rgba(200,200,200,0.3)}
-.corner{position:absolute;width:16px;height:16px;border-color:rgba(200,200,200,0.38);border-style:solid}
-.c-tl{top:0;left:0;border-width:1.5px 0 0 1.5px}
-.c-tr{top:0;right:0;border-width:1.5px 1.5px 0 0}
-.c-bl{bottom:0;left:0;border-width:0 0 1.5px 1.5px}
-.c-br{bottom:0;right:0;border-width:0 1.5px 1.5px 0}
-.hero-logo-name{margin-top:44px;text-align:center}
-.hero-logo-name-main{font-family:'Cinzel',serif;font-size:12px;font-weight:500;letter-spacing:0.22em;color:rgba(200,200,200,0.7);text-transform:uppercase;display:block}
-.hero-logo-rule{width:32px;height:1px;background:rgba(200,200,200,0.18);margin:12px auto}
-.hero-logo-name-sub{font-size:10px;font-weight:300;letter-spacing:0.22em;text-transform:uppercase;color:rgba(200,200,200,0.32);display:block}
+/* STAT BAR */
+.stat-bar {
+  background: var(--ink-mid); padding: 2rem;
+  display: flex; justify-content: center; flex-wrap: wrap;
+  border-bottom: 1px solid rgba(184,151,90,0.12);
+}
+.stat-item {
+  flex: 1; min-width: 140px; max-width: 220px;
+  text-align: center; padding: 1rem 1.5rem; position: relative;
+}
+.stat-item:not(:last-child)::after {
+  content: ''; position: absolute; right: 0; top: 20%; height: 60%;
+  width: 1px; background: rgba(255,255,255,0.07);
+}
+.stat-number {
+  font-family: 'Cormorant Garamond', serif; font-size: 2.4rem;
+  font-weight: 600; color: var(--gold); line-height: 1; display: block;
+}
+.stat-label {
+  font-size: 0.7rem; font-weight: 300; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(255,255,255,0.45);
+  margin-top: 0.4rem; display: block;
+}
 
-/* PILLAR STRIP */
-.pillar-strip{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);position:relative;z-index:1;background:var(--white)}
-.pillar-item{padding:2.8rem 2rem;border-right:1px solid var(--rule);text-align:center}
-.pillar-item:last-child{border-right:none}
-.pillar-number{font-family:'Cinzel',serif;font-size:2rem;font-weight:400;color:var(--navy);line-height:1;margin-bottom:4px;letter-spacing:0.04em}
-.pillar-number sup{font-size:.85rem;color:var(--silver);vertical-align:super}
-.pillar-label{font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--silver)}
+/* MAIN */
+main { max-width: var(--max); margin: 0 auto; padding: 5rem 1.5rem; display: flex; flex-direction: column; gap: 6rem; }
 
-/* SECTION BASE */
-.section-wrap{position:relative;z-index:1;background:var(--white)}
-.section-inner{max-width:1100px;margin:0 auto;padding:6rem 3rem}
-.s-eyebrow{font-size:10px;font-weight:400;letter-spacing:0.26em;text-transform:uppercase;color:var(--silver);margin-bottom:1rem;display:flex;align-items:center;gap:1rem}
-.s-eyebrow::before{content:'';display:block;width:22px;height:1px;background:var(--silver)}
-.s-title{font-family:'Cinzel',serif;font-size:clamp(1.6rem,2.5vw,2.4rem);font-weight:400;letter-spacing:0.06em;color:var(--navy);text-transform:uppercase;line-height:1.3;margin-bottom:1.2rem}
-.s-rule{width:40px;height:2px;background:var(--navy);opacity:0.14;margin-bottom:2.5rem}
+/* SECTION HEADER */
+.sec-header { margin-bottom: 2.5rem; }
+.sec-eyebrow {
+  font-size: 0.68rem; font-weight: 400; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.7rem;
+}
+.sec-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 400; line-height: 1.2; color: var(--ink);
+}
+.sec-rule { width: 40px; height: 1px; background: var(--gold); margin-top: 1rem; }
 
-/* FOCUS GRID */
-.focus-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem}
-.focus-card{border:1px solid var(--rule);padding:2.5rem 2rem;transition:border-color .25s,transform .25s;background:var(--white)}
-.focus-card:hover{border-color:var(--silver);transform:translateY(-3px)}
-.fc-num{font-family:'Cinzel',serif;font-size:1.8rem;font-weight:400;color:var(--navy);opacity:0.08;line-height:1;margin-bottom:1.5rem}
-.fc-title{font-family:'Cinzel',serif;font-size:.85rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--navy);margin-bottom:.9rem}
-.fc-body{font-size:13.5px;font-weight:300;line-height:1.8;color:rgba(30,44,66,0.6)}
+/* ABOUT GRID */
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 4px; overflow: hidden;
+}
+.about-card { background: var(--white); padding: 2.5rem; transition: background 0.25s; }
+.about-card:hover { background: #fdfcf8; }
+.about-card-icon { font-size: 1.3rem; margin-bottom: 1rem; display: block; color: var(--gold); }
+.about-card h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem; font-weight: 600; color: var(--ink); margin-bottom: 0.7rem;
+}
+.about-card p { font-size: 0.92rem; color: var(--muted); line-height: 1.72; font-weight: 300; }
+.about-card.full { grid-column: 1 / -1; }
+.valores-list { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem; }
+.valor-tag {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.85rem; font-weight: 500; color: var(--ink); letter-spacing: 0.04em;
+}
+.valor-tag::before {
+  content: ''; width: 6px; height: 6px; background: var(--gold);
+  border-radius: 50%; flex-shrink: 0;
+}
 
 /* PHILOSOPHY */
-.philosophy{background:var(--navy);position:relative;z-index:1;overflow:hidden}
-.philosophy::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(200,200,200,0.03) 80px),repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(200,200,200,0.03) 80px);pointer-events:none}
-.philosophy .section-inner{display:grid;grid-template-columns:1fr 1.7fr;gap:6rem;align-items:center}
-.philosophy .s-eyebrow{color:rgba(200,200,200,0.45)}
-.philosophy .s-eyebrow::before{background:rgba(200,200,200,0.35)}
-.philosophy .s-title{color:var(--white)}
-.philosophy .s-rule{background:var(--silver);opacity:0.25}
-.philo-quote{font-size:1.2rem;font-weight:300;font-style:italic;line-height:1.75;color:rgba(255,255,255,0.68);border-left:2px solid rgba(200,200,200,0.18);padding-left:1.5rem;margin-bottom:2rem}
-.philo-body{font-size:14px;font-weight:300;line-height:1.85;color:rgba(200,200,200,0.48)}
+.philosophy-block {
+  background: var(--ink); border-radius: 4px; padding: 3.5rem;
+  display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: center;
+  position: relative; overflow: hidden;
+}
+.philosophy-block::before {
+  content: ''; position: absolute; right: -60px; top: -60px;
+  width: 300px; height: 300px; border: 1px solid rgba(184,151,90,0.1);
+  border-radius: 50%; pointer-events: none;
+}
+.philosophy-block::after {
+  content: ''; position: absolute; right: -30px; top: -30px;
+  width: 200px; height: 200px; border: 1px solid rgba(184,151,90,0.07);
+  border-radius: 50%; pointer-events: none;
+}
+.philosophy-symbol { text-align: center; position: relative; z-index: 1; }
+.owl-icon { font-size: 5rem; line-height: 1; display: block; margin-bottom: 0.5rem; }
+.philosophy-symbol p { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+.philosophy-text { position: relative; z-index: 1; }
+.philosophy-text .sec-eyebrow { color: var(--gold); }
+.philosophy-text .sec-title { color: var(--white); }
+.philosophy-text p { color: rgba(255,255,255,0.55); font-size: 0.95rem; line-height: 1.82; font-weight: 300; margin-top: 1.2rem; }
 
-/* INSTRUMENTS */
-.instr-list{margin-top:2.5rem;border-top:1px solid var(--rule)}
-.instr-row{display:grid;grid-template-columns:44px 220px 1fr;align-items:start;gap:2rem;padding:2rem 1rem;border-bottom:1px solid var(--rule);transition:background .18s;margin:0 -1rem}
-.instr-row:hover{background:var(--navy-10)}
-.instr-num{font-family:'Cinzel',serif;font-size:.8rem;font-weight:400;color:var(--silver);letter-spacing:.1em;padding-top:3px}
-.instr-name{font-family:'Cinzel',serif;font-size:.9rem;font-weight:400;letter-spacing:.08em;color:var(--navy);text-transform:uppercase}
-.instr-desc{font-size:13.5px;font-weight:300;line-height:1.75;color:rgba(30,44,66,0.58)}
-
-/* SERVICES */
-.services-wrap{background:var(--off);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);position:relative;z-index:1}
-.services-wrap .section-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
-.srv-list{margin-top:2rem;display:flex;flex-direction:column}
-.srv-item{padding:1.5rem 0;border-bottom:1px solid var(--rule);display:flex;gap:1.2rem;align-items:flex-start}
-.srv-item:first-child{border-top:1px solid var(--rule)}
-.srv-diamond{width:7px;height:7px;border:1.5px solid var(--navy);transform:rotate(45deg);flex-shrink:0;margin-top:5px;opacity:0.38}
-.srv-title{font-family:'Cinzel',serif;font-size:.82rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:4px}
-.srv-desc{font-size:13px;font-weight:300;line-height:1.7;color:rgba(30,44,66,0.58)}
-.srv-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:2rem}
-.srv-tag{font-size:10px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);border:1px solid var(--rule);padding:6px 14px;background:var(--white)}
+/* INVEST */
+.invest-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+.invest-card {
+  background: var(--white); border: 1px solid rgba(0,0,0,0.05); border-radius: 4px;
+  padding: 2rem 1.5rem; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+.invest-card:hover {
+  transform: translateY(-4px); box-shadow: 0 12px 32px rgba(13,27,42,0.08); border-color: var(--gold);
+}
+.invest-icon { font-size: 1.8rem; display: block; margin-bottom: 1rem; }
+.invest-card h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem; font-weight: 600; color: var(--ink); margin-bottom: 0.5rem;
+}
+.invest-card p { font-size: 0.85rem; color: var(--muted); font-weight: 300; line-height: 1.65; }
 
 /* CONTACT */
-.contact-wrap{background:var(--navy);position:relative;z-index:1;overflow:hidden}
-.contact-wrap::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(200,200,200,0.03) 80px),repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(200,200,200,0.03) 80px);pointer-events:none}
-.contact-wrap .section-inner{display:grid;grid-template-columns:1.2fr 0.8fr;gap:5rem;align-items:start}
-.contact-wrap .s-eyebrow{color:rgba(200,200,200,0.45)}
-.contact-wrap .s-eyebrow::before{background:rgba(200,200,200,0.35)}
-.contact-wrap .s-title{color:var(--white)}
-.contact-wrap .s-rule{background:var(--silver);opacity:0.22}
-.contact-body{font-size:14px;font-weight:300;line-height:1.85;color:rgba(200,200,200,0.52);margin-bottom:2.5rem}
-.contact-btn{font-family:'Cinzel',serif;font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--navy);background:var(--white);padding:14px 32px;text-decoration:none;display:inline-block;transition:background .22s}
-.contact-btn:hover{background:var(--silver)}
-.contact-details{display:flex;flex-direction:column;gap:0}
-.cd-item{padding:1.2rem 0;border-bottom:1px solid rgba(200,200,200,0.09)}
-.cd-item:last-child{border-bottom:none}
-.cd-label{font-size:9px;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:rgba(200,200,200,0.32);display:block;margin-bottom:4px}
-.cd-value{font-size:13.5px;font-weight:300;color:rgba(200,200,200,0.72);line-height:1.6}
-.cd-value a{color:inherit;text-decoration:none;transition:color .2s}
-.cd-value a:hover{color:var(--white)}
+.contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+.contact-info {
+  background: var(--white); border: 1px solid rgba(0,0,0,0.05); border-radius: 4px; padding: 2.5rem;
+}
+.contact-info h4 {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; color: var(--ink); margin-bottom: 0.35rem;
+}
+.contact-subtitle { font-size: 0.82rem; color: var(--muted); font-weight: 300; margin-bottom: 2rem; }
+.contact-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; align-items: flex-start; }
+.contact-item-icon {
+  width: 36px; height: 36px; background: rgba(184,151,90,0.1); border-radius: 2px;
+  display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0;
+}
+.contact-item-body { flex: 1; }
+.contact-item-label {
+  display: block; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 2px;
+}
+.contact-item-value { font-size: 0.91rem; color: var(--ink); }
+.contact-item-value a { color: var(--ink); text-decoration: none; transition: color 0.2s; }
+.contact-item-value a:hover { color: var(--gold); }
+.contact-map { background: var(--ink); border-radius: 4px; overflow: hidden; min-height: 320px; position: relative; }
+.contact-map iframe { width: 100%; height: 100%; min-height: 320px; border: none; filter: grayscale(0.3) contrast(0.9); opacity: 0.85; }
+.map-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(13,27,42,0.7)); padding: 1.5rem; pointer-events: none;
+}
+.map-overlay p { color: rgba(255,255,255,0.65); font-size: 0.78rem; font-weight: 300; letter-spacing: 0.04em; }
 
 /* FOOTER */
-footer{background:#161f2e;position:relative;z-index:1;padding:2.2rem 4rem;display:flex;align-items:center;justify-content:space-between;gap:2rem}
-.footer-brand{font-family:'Cinzel',serif;font-size:11px;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:rgba(200,200,200,0.38)}
-.footer-legal{font-size:11px;font-weight:300;color:rgba(200,200,200,0.22);text-align:center;max-width:480px;line-height:1.65}
-.footer-meta{font-size:10px;font-weight:300;letter-spacing:.1em;color:rgba(200,200,200,0.22);text-align:right;line-height:1.7}
+footer { background: var(--ink); color: rgba(255,255,255,0.4); padding: 3rem 2rem 2rem; }
+.footer-inner {
+  max-width: var(--max); margin: 0 auto;
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 3rem;
+  padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.footer-brand img { height: 34px; margin-bottom: 1rem; filter: brightness(0.7); }
+.footer-brand p { font-size: 0.82rem; line-height: 1.72; font-weight: 300; max-width: 280px; }
+.footer-col h5 {
+  font-size: 0.66rem; font-weight: 500; letter-spacing: 0.18em;
+  text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 1rem;
+}
+.footer-col a {
+  display: block; font-size: 0.84rem; color: rgba(255,255,255,0.35);
+  text-decoration: none; margin-bottom: 0.6rem; font-weight: 300; transition: color 0.2s;
+}
+.footer-col a:hover { color: var(--gold); }
+.footer-bottom {
+  max-width: var(--max); margin: 0 auto; padding-top: 1.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 0.5rem; font-size: 0.77rem;
+}
+.footer-bottom a { color: rgba(255,255,255,0.3); text-decoration: none; }
+.footer-bottom a:hover { color: var(--gold); }
 
 /* ANIMATIONS */
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.hero-tag{animation:fadeUp .6s ease .1s both}
-.hero-title{animation:fadeUp .6s ease .22s both}
-.hero-div{animation:fadeUp .6s ease .32s both}
-.hero-body{animation:fadeUp .6s ease .42s both}
-.hero-actions{animation:fadeUp .6s ease .52s both}
-.hero-logo-area{animation:fadeUp .9s ease .3s both}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; }
+  50%       { opacity: 0.7; }
+}
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
+.reveal.visible { opacity: 1; transform: none; }
 
 /* RESPONSIVE */
-@media(max-width:960px){
-  nav{padding:0 1.5rem}
-  .nav-links{display:none}
-  .hamburger{display:flex}
-  .hero{grid-template-columns:1fr}
-  .hero-left{padding:5rem 1.5rem 3rem}
-  .hero-left::before{left:1.5rem}
-  .hero-right{min-height:360px;padding:4rem 1.5rem}
-  .logo-main{width:180px;height:180px}
-  .pillar-strip{grid-template-columns:repeat(2,1fr)}
-  .pillar-item:nth-child(2){border-right:none}
-  .pillar-item:nth-child(3){border-right:1px solid var(--rule);border-top:1px solid var(--rule)}
-  .pillar-item:nth-child(4){border-top:1px solid var(--rule);border-right:none}
-  .section-inner{padding:4rem 1.5rem}
-  .focus-grid{grid-template-columns:1fr}
-  .philosophy .section-inner{grid-template-columns:1fr;gap:3rem}
-  .instr-row{grid-template-columns:40px 1fr;gap:1rem}
-  .instr-name{grid-column:2}
-  .instr-desc{grid-column:2}
-  .services-wrap .section-inner{grid-template-columns:1fr;gap:3rem}
-  .contact-wrap .section-inner{grid-template-columns:1fr;gap:3rem}
-  footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}
-  .footer-meta{text-align:center}
+@media (max-width: 900px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .about-card.full { grid-column: auto; }
+  .philosophy-block { grid-template-columns: 1fr; gap: 2rem; }
+  .philosophy-symbol { display: none; }
+  .contact-wrapper { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) {
+  .stat-item:not(:last-child)::after { display: none; }
+  .stat-item { min-width: 120px; }
+  .philosophy-block { padding: 2rem 1.5rem; }
+  .contact-info { padding: 2rem 1.5rem; }
+  .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+  main { gap: 4rem; padding: 3.5rem 1.25rem; }
 }
 </style>
 </head>
+
 <body>
 
-<nav>
-  <a href="#" class="nav-brand">
-    <div class="logo-slot">
-      <img src="LogoAcasa.png" alt="Logo">
-      <div class="logo-slot-ph"></div>
-    </div>
-    <div class="nav-text">
-      <span class="nav-name">Adinolffi Capital Asset</span>
-      <span class="nav-sub">Gestión de Activos · Paraguay</span>
+<header>
+  <a href="#inicio" class="brand">
+    <img src="Isotipo - Blanco.PNG" alt="Adinolffi">
+    <div class="brand-name">
+      Adinolffi Capital Asset
+      <span>Asset Management · Paraguay</span>
     </div>
   </a>
-  <ul class="nav-links">
-    <li><a href="#enfoque">Enfoque</a></li>
-    <li><a href="#filosofia">Filosofía</a></li>
-    <li><a href="#instrumentos">Instrumentos</a></li>
-    <li><a href="#servicios">Servicios</a></li>
-    <li><a href="#contacto" class="nav-cta">Contacto</a></li>
-  </ul>
-  <div class="hamburger" onclick="toggleMenu()">
+  <nav class="desktop">
+    <a href="#nosotros">Nosotros</a>
+    <a href="#inversiones">Inversiones</a>
+    <a href="#contacto" class="nav-cta">Contacto</a>
+  </nav>
+  <button class="menu-toggle" id="menuBtn" aria-label="Menú" aria-expanded="false">
     <span></span><span></span><span></span>
-  </div>
-</nav>
+  </button>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="#inicio">Inicio</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#inversiones">Inversiones</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+</header>
 
-<section class="hero">
-  <div class="hero-left">
-    <div class="hero-tag">Solidez · Sabiduría · Visión de Largo Plazo</div>
-    <h1 class="hero-title">
-      <span>Gestión Privada de</span>
-      Activos<br>Financieros
-    </h1>
-    <div class="hero-div">
-      <div class="hero-div-line"></div>
-      <div class="hero-div-dia"></div>
+<section id="inicio" class="hero">
+  <div class="hero-content">
+    <div class="hero-logo">
+      <img src="Isologo - Blanco.PNG" alt="Adinolffi Capital Asset S.A.">
     </div>
-    <p class="hero-body">
-      Administración disciplinada de capital propio con horizonte de largo plazo. Acciones, bonos, fondos de inversión y activos diversificados, gestionados con rigor analítico y visión estratégica.
+    <p class="hero-eyebrow">Gestión institucional de activos · Paraguay</p>
+    <h2>Capital <em>inteligente.</em><br>Crecimiento sostenible.</h2>
+    <p class="hero-desc">
+      Consolidamos y gestionamos patrimonio con criterio institucional, decisiones estratégicas y una ética irrenunciable en cada inversión.
     </p>
     <div class="hero-actions">
-      <a href="#filosofia" class="btn-primary">Nuestra filosofía</a>
-      <a href="#instrumentos" class="btn-ghost">Ver instrumentos</a>
+      <a href="#nosotros" class="btn-primary">Conocer más</a>
+      <a href="#contacto" class="btn-outline">Hablar con nosotros</a>
     </div>
   </div>
-
-  <div class="hero-right">
-    <div class="hero-bg"></div>
-    <div class="hero-logo-area">
-      <div class="logo-main">
-        <div class="corner c-tl"></div>
-        <div class="corner c-tr"></div>
-        <div class="corner c-bl"></div>
-        <div class="corner c-br"></div>
-        <div class="logo-main-ph">
-          <div class="logo-main-ph-text"> <img src="LogoAcasa.png" alt="Adinolffi Capital Asset S.A."></div>
-        </div>
-      </div>
-      <div class="hero-logo-name">
-        <span class="hero-logo-name-main">Adinolffi Capital Asset</span>
-        <div class="hero-logo-rule"></div>
-        <span class="hero-logo-name-sub">S.A. · Luque, Paraguay</span>
-      </div>
-    </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Desplazar</span>
   </div>
 </section>
 
-<div class="pillar-strip">
-  <div class="pillar-item">
-    <div class="pillar-number">100<sup>%</sup></div>
-    <div class="pillar-label">Capital propio</div>
+<div class="stat-bar">
+  <div class="stat-item reveal">
+    <span class="stat-number">100%</span>
+    <span class="stat-label">Decisiones éticas</span>
   </div>
-  <div class="pillar-item">
-    <div class="pillar-number">6<sup>+</sup></div>
-    <div class="pillar-label">Clases de activos</div>
+  <div class="stat-item reveal">
+    <span class="stat-number">5+</span>
+    <span class="stat-label">Sectores de inversión</span>
   </div>
-  <div class="pillar-item">
-    <div class="pillar-number">LP</div>
-    <div class="pillar-label">Horizonte largo plazo</div>
+  <div class="stat-item reveal">
+    <span class="stat-number">PY</span>
+    <span class="stat-label">Raíces en Paraguay</span>
   </div>
-  <div class="pillar-item">
-    <div class="pillar-number">PY</div>
-    <div class="pillar-label">Constituida en Paraguay</div>
+  <div class="stat-item reveal">
+    <span class="stat-number">∞</span>
+    <span class="stat-label">Visión a largo plazo</span>
   </div>
 </div>
 
-<section class="section-wrap" id="enfoque">
-  <div class="section-inner">
-    <div class="s-eyebrow">Nuestro enfoque</div>
-    <h2 class="s-title">Tres principios que guían<br>cada decisión</h2>
-    <div class="s-rule"></div>
-    <div class="focus-grid">
-      <div class="focus-card">
-        <div class="fc-num">I</div>
-        <div class="fc-title">Reinversión sistemática</div>
-        <p class="fc-body">Los rendimientos generados se reinvierten en su totalidad, potenciando el efecto compuesto a lo largo del tiempo sin dilución del capital original.</p>
-      </div>
-      <div class="focus-card">
-        <div class="fc-num">II</div>
-        <div class="fc-title">Selección rigurosa</div>
-        <p class="fc-body">Cada instrumento es evaluado con criterios cuantitativos y cualitativos. La sabiduría del análisis profundo precede a toda decisión de inversión.</p>
-      </div>
-      <div class="focus-card">
-        <div class="fc-num">III</div>
-        <div class="fc-title">Capital independiente</div>
-        <p class="fc-body">Operamos exclusivamente con capital propio. Sin inversores externos, sin presión de rescates, con total libertad para ejecutar la estrategia de largo plazo.</p>
-      </div>
-    </div>
-  </div>
-</section>
+<main>
 
-<section class="philosophy" id="filosofia">
-  <div class="section-inner">
-    <div>
-      <div class="s-eyebrow">Filosofía de inversión</div>
-      <h2 class="s-title">El tiempo<br>es nuestra<br>ventaja</h2>
-      <div class="s-rule"></div>
+  <section id="nosotros">
+    <div class="sec-header reveal">
+      <span class="sec-eyebrow">Sobre la empresa</span>
+      <h2 class="sec-title">Quiénes somos</h2>
+      <div class="sec-rule"></div>
     </div>
-    <div>
-      <p class="philo-quote">Como la arquitectura romana que perdura siglos, construimos patrimonio sobre cimientos sólidos. Como el búho que observa antes de actuar, decidimos con análisis profundo y visión estratégica.</p>
-      <p class="philo-body">En Adinolffi Capital Asset S.A. creemos que la riqueza sostenida se construye con paciencia, disciplina y la convicción de mantenerse invertido a través de los ciclos del mercado. No buscamos rentabilidades extraordinarias de corto plazo; buscamos el crecimiento compuesto y sostenible del patrimonio a lo largo de años y décadas.<br><br>Nuestra estructura societaria garantiza alineación total de intereses: el éxito del portafolio es el único objetivo, sin conflictos, sin compromisos externos.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section-wrap" id="instrumentos">
-  <div class="section-inner">
-    <div class="s-eyebrow">Universo de inversión</div>
-    <h2 class="s-title">Instrumentos gestionados</h2>
-    <div class="s-rule"></div>
-    <div class="instr-list">
-      <div class="instr-row">
-        <div class="instr-num">01</div>
-        <div class="instr-name">Acciones</div>
-        <div class="instr-desc">Participación en empresas del mercado local con sólidos fundamentales y trayectoria probada. Base del portafolio con foco en crecimiento de valor a largo plazo.</div>
+    <div class="about-grid reveal">
+      <div class="about-card">
+        <span class="about-card-icon">◎</span>
+        <h4>Misión</h4>
+        <p>Generar y gestionar de manera profesional un capital sólido en Paraguay mediante inversiones estratégicas en empresas, bonos, CDAs, inmuebles y otros activos lícitos, maximizando el valor de forma responsable.</p>
       </div>
-      <div class="instr-row">
-        <div class="instr-num">02</div>
-        <div class="instr-name">Bonos</div>
-        <div class="instr-desc">Títulos de renta fija seleccionados por calidad crediticia y plazo, que aportan estabilidad y previsibilidad al flujo de caja del portafolio.</div>
+      <div class="about-card">
+        <span class="about-card-icon">◈</span>
+        <h4>Visión</h4>
+        <p>Convertirnos en el referente de gestión de activos en Paraguay, reconocidos por la solidez de nuestro criterio financiero, nuestra integridad institucional y el impacto positivo en el ecosistema económico local.</p>
       </div>
-      <div class="instr-row">
-        <div class="instr-num">03</div>
-        <div class="instr-name">Fondos Mutuos</div>
-        <div class="instr-desc">Instrumentos colectivos de gestión profesional que complementan la exposición directa con diversificación sectorial y geográfica eficiente.</div>
-      </div>
-      <div class="instr-row">
-        <div class="instr-num">04</div>
-        <div class="instr-name">Fondos de Inversión</div>
-        <div class="instr-desc">Vehículos estructurados que permiten acceder a estrategias y activos de mayor sofisticación con horizontes de mediano y largo plazo.</div>
-      </div>
-      <div class="instr-row">
-        <div class="instr-num">05</div>
-        <div class="instr-name">Bienes Raíces</div>
-        <div class="instr-desc">Activos inmobiliarios como componente de preservación de capital y generación de renta, seleccionados por ubicación y potencial de valorización.</div>
-      </div>
-      <div class="instr-row">
-        <div class="instr-num">06</div>
-        <div class="instr-name">Actividades Comerciales</div>
-        <div class="instr-desc">Oportunidades en actividades productivas y comerciales lícitas que presenten fundamentos sólidos, alineados con la estrategia de diversificación patrimonial.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="services-wrap" id="servicios">
-  <div class="section-inner">
-    <div>
-      <div class="s-eyebrow">Servicios tecnológicos</div>
-      <h2 class="s-title">Desarrollo de<br>Software a Medida</h2>
-      <div class="s-rule"></div>
-      <p style="font-size:14px;font-weight:300;line-height:1.85;color:rgba(30,44,66,0.6);margin-bottom:2rem">Como actividad complementaria, la empresa ofrece servicios profesionales de análisis y desarrollo de sistemas. Una fuente de ingresos operativos que fortalece la capacidad de inversión.</p>
-      <div class="srv-tags">
-        <span class="srv-tag">Desarrollo web</span>
-        <span class="srv-tag">Análisis de sistemas</span>
-        <span class="srv-tag">Automatización</span>
-        <span class="srv-tag">Consultoría técnica</span>
-        <span class="srv-tag">Factura legal RUC</span>
-      </div>
-    </div>
-    <div class="srv-list">
-      <div class="srv-item">
-        <div class="srv-diamond"></div>
-        <div>
-          <div class="srv-title">Análisis y arquitectura de sistemas</div>
-          <p class="srv-desc">Diseño de soluciones informáticas adaptadas a la realidad operativa del cliente, con foco en eficiencia y escalabilidad.</p>
-        </div>
-      </div>
-      <div class="srv-item">
-        <div class="srv-diamond"></div>
-        <div>
-          <div class="srv-title">Desarrollo de aplicaciones</div>
-          <p class="srv-desc">Construcción de sistemas web con tecnologías modernas, desde el diseño hasta la implementación productiva.</p>
-        </div>
-      </div>
-      <div class="srv-item">
-        <div class="srv-diamond"></div>
-        <div>
-          <div class="srv-title">Facturación formal</div>
-          <p class="srv-desc">Servicios formalizados bajo RUC paraguayo, con emisión de factura legal y cumplimiento íntegro de las obligaciones tributarias vigentes.</p>
+      <div class="about-card full">
+        <span class="about-card-icon">◇</span>
+        <h4>Valores que nos definen</h4>
+        <div class="valores-list">
+          <span class="valor-tag">Innovación</span>
+          <span class="valor-tag">Integridad</span>
+          <span class="valor-tag">Excelencia</span>
+          <span class="valor-tag">Transparencia</span>
+          <span class="valor-tag">Visión estratégica</span>
+          <span class="valor-tag">Responsabilidad</span>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="contact-wrap" id="contacto">
-  <div class="section-inner">
-    <div>
-      <div class="s-eyebrow">Contacto</div>
-      <h2 class="s-title">Iniciemos una<br>conversación</h2>
-      <div class="s-rule"></div>
-      <p class="contact-body">Para consultas sobre servicios de desarrollo de software o asuntos institucionales de la empresa. Respondemos en horario hábil de lunes a viernes.</p>
-      <a href="https://wa.me/595992319642" target="_blank" class="contact-btn">Escribir por WhatsApp</a>
-    </div>
-    <div class="contact-details">
-      <div class="cd-item">
-        <span class="cd-label">Sitio web</span>
-        <span class="cd-value"><a href="https://www.adinolfficapitalasset.com.py/" target="_blank">www.adinolfficapitalasset.com.py</a></span>
+  <section>
+    <div class="philosophy-block reveal">
+      <div class="philosophy-symbol">
+        <span class="owl-icon">🦉</span>
+        <p>Símbolo de<br>sabiduría</p>
       </div>
-      <div class="cd-item">
-        <span class="cd-label">Email</span>
-        <span class="cd-value"><a href="mailto:contacto@adinolfficapitalasset.com.py">contacto@adinolfficapitalasset.com.py</a></span>
-      </div>
-      <div class="cd-item">
-        <span class="cd-label">WhatsApp</span>
-        <span class="cd-value"><a href="https://wa.me/595992319642">+595 992 319 642</a></span>
-      </div>
-      <div class="cd-item">
-        <span class="cd-label">Dirección</span>
-        <span class="cd-value">Capitán Cañiza e/ Patria Soberana<br>y La Colonia — Luque, Paraguay</span>
-      </div>
-      <div class="cd-item">
-        <span class="cd-label">Horario de atención</span>
-        <span class="cd-value">Lunes a viernes · 08:00 a 18:00 hs</span>
+      <div class="philosophy-text">
+        <span class="sec-eyebrow">Nuestra filosofía</span>
+        <h2 class="sec-title">Solidez. Análisis. Propósito.</h2>
+        <p>La identidad de Adinolffi Capital Asset se inspira en la solidez de la arquitectura clásica y en el búho, símbolo histórico de sabiduría y análisis estratégico. Cada decisión de inversión es el resultado de un proceso riguroso, donde la prudencia y la perspectiva de largo plazo prevalecen sobre la especulación inmediata.</p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <section id="inversiones">
+    <div class="sec-header reveal">
+      <span class="sec-eyebrow">Áreas de actuación</span>
+      <h2 class="sec-title">Nuestras inversiones</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="invest-grid">
+      <div class="invest-card reveal">
+        <span class="invest-icon">🏢</span>
+        <h4>Empresas</h4>
+        <p>Participaciones estratégicas en empresas con potencial de crecimiento sólido en el mercado paraguayo.</p>
+      </div>
+      <div class="invest-card reveal">
+        <span class="invest-icon">📊</span>
+        <h4>Bonos y CDAs</h4>
+        <p>Instrumentos de renta fija que combinan seguridad y rendimiento estable dentro de un portafolio diversificado.</p>
+      </div>
+      <div class="invest-card reveal">
+        <span class="invest-icon">🏛️</span>
+        <h4>Inmuebles</h4>
+        <p>Activos inmobiliarios seleccionados por ubicación estratégica y capacidad de generación de valor a largo plazo.</p>
+      </div>
+      <div class="invest-card reveal">
+        <span class="invest-icon">🌱</span>
+        <h4>Otros activos</h4>
+        <p>Exploración de oportunidades en negocios lícitos e innovadores que se alineen con nuestra filosofía de inversión.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <div class="sec-header reveal">
+      <span class="sec-eyebrow">Comuníquese con nosotros</span>
+      <h2 class="sec-title">Contacto</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="contact-wrapper">
+      <div class="contact-info reveal">
+        <h4>Estamos disponibles para usted</h4>
+        <p class="contact-subtitle">Lunes a viernes · 08:00 — 18:00 hs</p>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div class="contact-item-body">
+            <span class="contact-item-label">Dirección</span>
+            <span class="contact-item-value">Capitán Cañiza esq. Patria Soberana y La Colonia<br>Luque, Paraguay</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">✉️</div>
+          <div class="contact-item-body">
+            <span class="contact-item-label">Correo electrónico</span>
+            <span class="contact-item-value">
+              <a href="mailto:contacto@adinolfficapitalasset.com.py">contacto@adinolfficapitalasset.com.py</a>
+            </span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📱</div>
+          <div class="contact-item-body">
+            <span class="contact-item-label">Teléfono / WhatsApp</span>
+            <span class="contact-item-value">
+              <a href="https://wa.me/595992319642" target="_blank" rel="noopener">(0992) 319 642</a>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-map reveal">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d334.4044894380062!2d-57.48593987040317!3d-25.280909644752107!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1ses!2spy!4v1777372272853!5m2!1ses!2spy"
+          width="100%"
+          height="450"
+          style="border:0;"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Ubicación Adinolffi Capital Asset">
+        </iframe>
+
+        <div class="map-overlay">
+          <p>📍 Ubicación exacta · Paraguay</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
 
 <footer>
-  <div class="footer-brand">Adinolffi Capital Asset S.A.</div>
-  <div class="footer-legal">Esta página es de carácter institucional e informativo. No constituye una oferta pública de valores ni una invitación a invertir. La empresa opera exclusivamente con capital propio.</div>
-  <div class="footer-meta">Luque, Paraguay<br>© 2025 Adinolffi Capital Asset S.A.</div>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="Isotipo - Blanco.PNG" alt="Adinolffi">
+      <p>Gestión institucional y profesional de activos e inversiones en Paraguay. Solidez, transparencia y visión estratégica en cada decisión.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Navegación</h5>
+      <a href="#inicio">Inicio</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#inversiones">Inversiones</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <div class="footer-col">
+      <h5>Contacto</h5>
+      <a href="mailto:contacto@adinolfficapitalasset.com.py">contacto@adinolfficapitalasset.com.py</a>
+      <a href="https://wa.me/595992319642" target="_blank" rel="noopener">(0992) 319 642</a>
+      <a href="#contacto">Luque, Paraguay</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Adinolffi Capital Asset S.A. — Todos los derechos reservados.</span>
+    <a href="https://www.adinolfficapitalasset.com.py">adinolfficapitalasset.com.py</a>
+  </div>
 </footer>
 
 <script>
-function toggleMenu(){
-  var l=document.querySelector('.nav-links');
-  var open=l.style.display==='flex';
-  if(open){l.style=''}
-  else{
-    l.style.display='flex';l.style.flexDirection='column';l.style.position='fixed';
-    l.style.top='76px';l.style.left='0';l.style.right='0';
-    l.style.background='rgba(255,255,255,0.98)';l.style.padding='1.5rem 2rem';
-    l.style.borderBottom='1px solid rgba(30,44,66,0.1)';l.style.gap='1.5rem';l.style.zIndex='199';
-  }
-}
-document.querySelectorAll('.nav-links a').forEach(function(a){
-  a.addEventListener('click',function(){document.querySelector('.nav-links').style='';});
+// Mobile menu
+const menuBtn = document.getElementById('menuBtn');
+const mobileNav = document.getElementById('mobileNav');
+menuBtn.addEventListener('click', () => {
+  const open = mobileNav.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded', open);
+});
+mobileNav.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => mobileNav.classList.remove('open'));
+});
+
+// Scroll reveal with stagger
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+reveals.forEach(el => observer.observe(el));
+
+// Stagger grid children
+document.querySelectorAll('.about-grid, .invest-grid').forEach(grid => {
+  grid.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.1}s`;
+  });
 });
 </script>
+
 </body>
 </html>
