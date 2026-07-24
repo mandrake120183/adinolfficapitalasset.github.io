@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulación de Dividendos - Dashboard Profesional</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg-dark: #0f172a;
+  --bg-card: #1e293b;
+  --bg-input: #334155;
+  --accent: #10b981;
+  --accent-light: #34d399;
+  --accent-sec: #3b82f6;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --border: #334155;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text-primary); min-height: 100vh; }
+
+.container { max-width: 1500px; margin: 0 auto; padding: 24px; }
+
+.header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px; flex-wrap: wrap; gap: 16px;
+}
+.header h1 { font-size: 1.6rem; font-weight: 700; color: var(--text-primary); }
+.header .subtitle { color: var(--text-secondary); font-size: 0.9rem; margin-top: 4px; }
+
+.btn {
+  padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer;
+  font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem;
+  transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary { background: var(--accent); color: #064e3b; }
+.btn-primary:hover { background: var(--accent-light); transform: translateY(-1px); }
+.btn-secondary { background: var(--bg-input); color: var(--text-primary); border: 1px solid var(--border); }
+.btn-secondary:hover { background: #475569; }
+
+.kpi-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px; margin-bottom: 24px;
+}
+.kpi-card {
+  background: var(--bg-card); border-radius: 16px; padding: 20px;
+  border: 1px solid var(--border); transition: transform 0.2s;
+}
+.kpi-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+.kpi-label { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.kpi-value { font-size: 1.4rem; font-weight: 700; color: var(--text-primary); }
+.kpi-value.accent { color: var(--accent-light); }
+.kpi-value.secondary { color: var(--accent-sec); }
+.kpi-value.warning { color: var(--warning); }
+.kpi-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+.tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.tab {
+  padding: 12px 24px; background: transparent; border: none; color: var(--text-secondary);
+  cursor: pointer; font-weight: 600; font-size: 0.9rem; border-bottom: 3px solid transparent;
+  transition: all 0.2s; font-family: 'Inter', sans-serif;
+}
+.tab.active { color: var(--accent-light); border-bottom-color: var(--accent); }
+.tab:hover { color: var(--text-primary); }
+
+.panel { display: none; }
+.panel.active { display: block; }
+
+.params-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px; margin-bottom: 24px;
+}
+.param-card {
+  background: var(--bg-card); border-radius: 14px; padding: 20px;
+  border: 1px solid var(--border);
+}
+.param-card h3 { font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; }
+.form-group { margin-bottom: 14px; }
+.form-group label { display: block; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 6px; font-weight: 500; }
+.form-group input {
+  width: 100%; padding: 10px 14px; background: var(--bg-input); border: 1px solid var(--border);
+  border-radius: 10px; color: var(--text-primary); font-family: 'Inter', sans-serif; font-size: 0.95rem;
+  transition: border-color 0.2s;
+}
+.form-group input:focus { outline: none; border-color: var(--accent); }
+
+.table-wrapper {
+  background: var(--bg-card); border-radius: 16px; border: 1px solid var(--border);
+  overflow: hidden; margin-bottom: 24px;
+}
+.table-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 20px; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 12px;
+}
+.table-header h2 { font-size: 1rem; font-weight: 600; }
+.data-table {
+  width: 100%; border-collapse: collapse; font-size: 0.78rem;
+}
+.data-table thead { background: rgba(16, 185, 129, 0.08); }
+.data-table th {
+  padding: 12px 10px; text-align: right; font-weight: 600; color: var(--accent-light);
+  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.3px; border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.data-table th:first-child { text-align: center; }
+.data-table td {
+  padding: 10px; text-align: right; border-bottom: 1px solid rgba(51,65,85,0.5);
+  color: var(--text-primary); font-variant-numeric: tabular-nums;
+}
+.data-table td:first-child { text-align: center; font-weight: 600; color: var(--accent-light); }
+.data-table tbody tr:hover { background: rgba(59,130,246,0.06); }
+.data-table tbody tr:nth-child(5n) td { border-bottom: 2px solid var(--border); }
+.data-table tfoot td { font-weight: 700; color: var(--warning); background: rgba(245,158,11,0.05); }
+
+.charts-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 20px; margin-bottom: 24px;
+}
+.chart-card {
+  background: var(--bg-card); border-radius: 16px; padding: 20px;
+  border: 1px solid var(--border);
+}
+.chart-card h3 { font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; }
+
+.toggle-row { display: flex; align-items: center; gap: 12px; }
+.toggle-switch {
+  position: relative; width: 44px; height: 24px; background: var(--bg-input);
+  border-radius: 12px; cursor: pointer; transition: background 0.2s;
+}
+.toggle-switch.on { background: var(--accent); }
+.toggle-switch::after {
+  content: ''; position: absolute; width: 20px; height: 20px; background: white;
+  border-radius: 50%; top: 2px; left: 2px; transition: transform 0.2s;
+}
+.toggle-switch.on::after { transform: translateX(20px); }
+.toggle-label { font-size: 0.85rem; color: var(--text-secondary); }
+
+.table-scroll { overflow-x: auto; }
+.table-scroll::-webkit-scrollbar { height: 8px; }
+.table-scroll::-webkit-scrollbar-track { background: var(--bg-dark); }
+.table-scroll::-webkit-scrollbar-thumb { background: var(--bg-input); border-radius: 4px; }
+
+@media (max-width: 768px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .charts-grid { grid-template-columns: 1fr; }
+  .header { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div>
+      <h1>📊 Simulación de Dividendos</h1>
+      <div class="subtitle">Plan sin reinversión de dividendos cobrados en metálico</div>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-secondary" onclick="resetParams()">🔄 Restablecer</button>
+      <button class="btn btn-primary" onclick="exportToExcel()">📥 Exportar a Excel</button>
+    </div>
+  </div>
+
+  <div class="kpi-grid" id="kpiGrid"></div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('tabla')" id="tab-tabla">📋 Tabla de Simulación</button>
+    <button class="tab" onclick="switchTab('graficos')" id="tab-graficos">📈 Gráficos</button>
+    <button class="tab" onclick="switchTab('parametros')" id="tab-parametros">⚙️ Parámetros</button>
+  </div>
+
+  <div class="panel active" id="panel-tabla">
+    <div class="table-wrapper">
+      <div class="table-header">
+        <h2>📋 Detalle Anual de la Simulación</h2>
+        <div class="toggle-row">
+          <div class="toggle-switch on" id="toggle-format" onclick="toggleFormat()"></div>
+          <span class="toggle-label" id="toggle-label">Formato moneda ($)</span>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table class="data-table" id="dataTable">
+          <thead>
+            <tr>
+              <th>Año</th>
+              <th>Acc. Iniciales</th>
+              <th>Aporte Anual</th>
+              <th>Precio Compra</th>
+              <th>Acc. Compradas</th>
+              <th>Div. Efectivo/Acc</th>
+              <th>Dividendos Efectivo</th>
+              <th>Dividendos Metálico</th>
+              <th>Acc. por Dividendo</th>
+              <th>Primas Gratis</th>
+              <th>Acc. Finales</th>
+              <th>Costo Acumulado</th>
+              <th>Costo Promedio</th>
+              <th>Total Div. Efectivo</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+          <tfoot id="tableFoot"></tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-graficos">
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h3>📈 Evolución de Acciones Finales</h3>
+        <svg id="chart-acciones" width="100%" height="280" viewBox="0 0 600 280"></svg>
+      </div>
+      <div class="chart-card">
+        <h3>💰 Evolución del Costo Acumulado</h3>
+        <svg id="chart-costo" width="100%" height="280" viewBox="0 0 600 280"></svg>
+      </div>
+      <div class="chart-card">
+        <h3>📊 Dividendos Efectivo por Año</h3>
+        <svg id="chart-dividendos" width="100%" height="280" viewBox="0 0 600 280"></svg>
+      </div>
+      <div class="chart-card">
+        <h3>🔻 Evolución del Costo Promedio</h3>
+        <svg id="chart-promedio" width="100%" height="280" viewBox="0 0 600 280"></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-parametros">
+    <div class="params-grid">
+      <div class="param-card">
+        <h3>📌 Configuración Inicial</h3>
+        <div class="form-group">
+          <label>Acciones Iniciales</label>
+          <input type="number" id="p-acc-ini" value="290" oninput="recalc()">
+        </div>
+        <div class="form-group">
+          <label>Costo Acumulado Inicial</label>
+          <input type="number" id="p-costo-ini" value="56720000" oninput="recalc()">
+        </div>
+        <div class="form-group">
+          <label>Aporte Anual</label>
+          <input type="number" id="p-aporte" value="48000000" oninput="recalc()">
+        </div>
+      </div>
+      <div class="param-card">
+        <h3>💵 Precios y Dividendos</h3>
+        <div class="form-group">
+          <label>Precio de Compra</label>
+          <input type="number" id="p-precio" value="380000" oninput="recalc()">
+        </div>
+        <div class="form-group">
+          <label>Dividendo Efectivo por Acción</label>
+          <input type="number" id="p-div-acc" value="46460" oninput="recalc()">
+        </div>
+        <div class="form-group">
+          <label>Precio Dividendo Acciones</label>
+          <input type="number" id="p-div-precio" value="250000" oninput="recalc()">
+        </div>
+      </div>
+      <div class="param-card">
+        <h3>🎁 Beneficios</h3>
+        <div class="form-group">
+          <label>Primas % Anual</label>
+          <input type="number" id="p-primas" value="2" step="0.1" oninput="recalc()">
+        </div>
+        <div class="form-group">
+          <label>Años de Simulación</label>
+          <input type="number" id="p-anos" value="15" min="1" max="50" oninput="recalc()">
+        </div>
+        <div class="form-group">
+          <label>% Dividendo en Metálico</label>
+          <input type="number" id="p-pct-metalico" value="60" min="0" max="100" step="1" oninput="recalc()">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var params = {
+  accIni: 290, costoIni: 56720000, aporte: 48000000,
+  precio: 380000, divAcc: 46460, divPrecio: 250000,
+  primasPct: 2, anos: 15, pctMetalico: 60
+};
+var currencyMode = true;
+var data = [];
+
+function fmtMoney(n) {
+  if (n === undefined || n === null || isNaN(n)) return '-';
+  return '$' + n.toLocaleString('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
+function fmtNum(n, d) {
+  d = d || 2;
+  if (n === undefined || n === null || isNaN(n)) return '-';
+  return n.toLocaleString('es-CO', { minimumFractionDigits: d, maximumFractionDigits: d });
+}
+function fmtCell(n, isMoney) {
+  if (currencyMode && isMoney) return fmtMoney(n);
+  return fmtNum(n, isMoney ? 0 : 4);
+}
+
+function calculate() {
+  data = [];
+  var accIni = params.accIni;
+  var costoAcum = params.costoIni;
+  var totalDivEfectivo = 0;
+  var pctMetalico = params.pctMetalico / 100;
+  var pctReinversion = 1 - pctMetalico;
+
+  for (var year = 1; year <= params.anos; year++) {
+    var aporte = params.aporte;
+    var precio = params.precio;
+    var divAcc = params.divAcc;
+    var divPrecio = params.divPrecio;
+    var primasPct = params.primasPct / 100;
+
+    var divEfectivoTotal = accIni * divAcc;
+    var divMetalico = accIni * divAcc * pctMetalico;
+    var accPorDividendo = (accIni * divAcc * pctReinversion) / divPrecio;
+    var primasGratis = accIni * primasPct;
+    var accCompradas = (aporte + divMetalico) / precio;
+    var accFinales = accIni + accCompradas + accPorDividendo + primasGratis;
+    costoAcum = costoAcum + aporte;
+    var costoPromedio = costoAcum / accFinales;
+    totalDivEfectivo = totalDivEfectivo + divEfectivoTotal;
+
+    data.push({
+      year: year, accIni: accIni, aporte: aporte, precio: precio,
+      accCompradas: accCompradas, divAcc: divAcc,
+      divEfectivoTotal: divEfectivoTotal, divMetalico: divMetalico,
+      accPorDividendo: accPorDividendo, primasGratis: primasGratis,
+      accFinales: accFinales, costoAcum: costoAcum,
+      costoPromedio: costoPromedio, totalDivEfectivo: totalDivEfectivo
+    });
+    accIni = accFinales;
+  }
+}
+
+function renderTable() {
+  var tbody = document.getElementById('tableBody');
+  var tfoot = document.getElementById('tableFoot');
+  tbody.innerHTML = '';
+  tfoot.innerHTML = '';
+
+  for (var i = 0; i < data.length; i++) {
+    var row = data[i];
+    var isYear5 = row.year === 5 || row.year === 10 || row.year === 15;
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td>' + row.year + '</td>' +
+      '<td>' + fmtCell(row.accIni, false) + '</td>' +
+      '<td>' + fmtCell(row.aporte, true) + '</td>' +
+      '<td>' + fmtCell(row.precio, true) + '</td>' +
+      '<td>' + fmtCell(row.accCompradas, false) + '</td>' +
+      '<td>' + fmtCell(row.divAcc, true) + '</td>' +
+      '<td>' + fmtCell(row.divEfectivoTotal, true) + '</td>' +
+      '<td>' + fmtCell(row.divMetalico, true) + '</td>' +
+      '<td>' + fmtCell(row.accPorDividendo, false) + '</td>' +
+      '<td>' + fmtCell(row.primasGratis, false) + '</td>' +
+      '<td><strong>' + fmtCell(row.accFinales, false) + '</strong></td>' +
+      '<td>' + fmtCell(row.costoAcum, true) + '</td>' +
+      '<td>' + fmtCell(row.costoPromedio, true) + '</td>' +
+      '<td>' + (isYear5 ? fmtCell(row.totalDivEfectivo, true) : '-') + '</td>';
+    tbody.appendChild(tr);
+  }
+
+  var last = data[data.length - 1];
+  var totalAporte = params.aporte * params.anos;
+  var sumAccCompradas = 0, sumDivEfectivo = 0, sumDivMetalico = 0, sumAccDiv = 0, sumPrimas = 0;
+  for (var j = 0; j < data.length; j++) {
+    sumAccCompradas += data[j].accCompradas;
+    sumDivEfectivo += data[j].divEfectivoTotal;
+    sumDivMetalico += data[j].divMetalico;
+    sumAccDiv += data[j].accPorDividendo;
+    sumPrimas += data[j].primasGratis;
+  }
+
+  var trFoot = document.createElement('tr');
+  trFoot.innerHTML =
+    '<td>TOTAL</td><td>-</td>' +
+    '<td>' + fmtCell(totalAporte, true) + '</td><td>-</td>' +
+    '<td>' + fmtCell(sumAccCompradas, false) + '</td><td>-</td>' +
+    '<td>' + fmtCell(sumDivEfectivo, true) + '</td>' +
+    '<td>' + fmtCell(sumDivMetalico, true) + '</td>' +
+    '<td>' + fmtCell(sumAccDiv, false) + '</td>' +
+    '<td>' + fmtCell(sumPrimas, false) + '</td>' +
+    '<td><strong>' + fmtCell(last.accFinales, false) + '</strong></td>' +
+    '<td>' + fmtCell(last.costoAcum, true) + '</td>' +
+    '<td>' + fmtCell(last.costoPromedio, true) + '</td>' +
+    '<td>' + fmtCell(last.totalDivEfectivo, true) + '</td>';
+  tfoot.appendChild(trFoot);
+}
+
+function renderKPIs() {
+  var last = data[data.length - 1];
+  var sumDivMetalico = 0, sumPrimas = 0, sumAccCompradas = 0, sumAccDiv = 0, sumDivEfectivo = 0;
+  for (var j = 0; j < data.length; j++) {
+    sumDivMetalico += data[j].divMetalico;
+    sumPrimas += data[j].primasGratis;
+    sumAccCompradas += data[j].accCompradas;
+    sumAccDiv += data[j].accPorDividendo;
+    sumDivEfectivo += data[j].divEfectivoTotal;
+  }
+
+  var kpiData = [
+    { label: 'Acciones Finales', value: fmtNum(last.accFinales, 2), sub: 'Acumulado total', accent: true },
+    { label: 'Costo Acumulado', value: fmtMoney(last.costoAcum), sub: 'Inversión total', accent: false },
+    { label: 'Div. Efectivo Total', value: fmtMoney(sumDivEfectivo), sub: params.anos + ' años', accent: false, warning: true },
+    { label: 'Div. Metálico Total', value: fmtMoney(sumDivMetalico), sub: params.pctMetalico + '% reinvertido', accent: true },
+    { label: 'Costo Promedio/Acc', value: fmtMoney(last.costoPromedio), sub: 'Promedio ponderado', accent: false },
+    { label: 'Primas Gratis', value: fmtNum(sumPrimas, 2), sub: 'Acciones bonus', accent: false },
+    { label: 'Acc. por Aportes', value: fmtNum(sumAccCompradas, 2), sub: 'Compradas con aportes', accent: false },
+    { label: 'Acc. por Dividendo', value: fmtNum(sumAccDiv, 2), sub: 'Compradas con dividendos', accent: false }
+  ];
+
+  var grid = document.getElementById('kpiGrid');
+  var html = '';
+  for (var i = 0; i < kpiData.length; i++) {
+    var k = kpiData[i];
+    var cls = k.accent ? 'accent' : k.warning ? 'warning' : 'secondary';
+    html += '<div class="kpi-card"><div class="kpi-label">' + k.label + '</div>' +
+      '<div class="kpi-value ' + cls + '">' + k.value + '</div>' +
+      '<div class="kpi-sub">' + k.sub + '</div></div>';
+  }
+  grid.innerHTML = html;
+}
+
+function drawLineChart(svgId, dataArr, color, label, isMoney) {
+  var svg = document.getElementById(svgId);
+  var w = 600, h = 280, pad = { top: 30, right: 30, bottom: 40, left: 70 };
+  var cw = w - pad.left - pad.right, ch = h - pad.top - pad.bottom;
+  var maxVal = dataArr[0], minVal = dataArr[0];
+  for (var i = 1; i < dataArr.length; i++) {
+    if (dataArr[i] > maxVal) maxVal = dataArr[i];
+    if (dataArr[i] < minVal) minVal = dataArr[i];
+  }
+  var range = maxVal - minVal || 1;
+  var points = '', area = 'M ' + pad.left + ' ' + (h - pad.bottom) + ' ';
+  for (var i = 0; i < dataArr.length; i++) {
+    var x = pad.left + (i / (dataArr.length - 1)) * cw;
+    var y = pad.top + ch - ((dataArr[i] - minVal) / range) * ch;
+    points += x + ',' + y + ' ';
+    area += 'L ' + x + ' ' + y + ' ';
+  }
+  area += 'L ' + (pad.left + cw) + ' ' + (h - pad.bottom) + ' Z';
+
+  var gridLines = '', xLabels = '', dots = '';
+  for (var i = 0; i <= 5; i++) {
+    var y = pad.top + (i / 5) * ch;
+    gridLines += '<line x1="' + pad.left + '" y1="' + y + '" x2="' + (w - pad.right) + '" y2="' + y + '" stroke="#334155" stroke-width="0.5" stroke-dasharray="4"/>';
+    var val = maxVal - (i / 5) * range;
+    gridLines += '<text x="' + (pad.left - 10) + '" y="' + (y + 4) + '" text-anchor="end" fill="#94a3b8" font-size="10">' + (isMoney ? fmtMoney(val) : fmtNum(val, 0)) + '</text>';
+  }
+  for (var i = 0; i < data.length; i++) {
+    var x = pad.left + (i / (data.length - 1)) * cw;
+    xLabels += '<text x="' + x + '" y="' + (h - pad.bottom + 18) + '" text-anchor="middle" fill="#94a3b8" font-size="10">A' + data[i].year + '</text>';
+  }
+  for (var i = 0; i < dataArr.length; i++) {
+    var x = pad.left + (i / (dataArr.length - 1)) * cw;
+    var y = pad.top + ch - ((dataArr[i] - minVal) / range) * ch;
+    dots += '<circle cx="' + x + '" cy="' + y + '" r="4" fill="' + color + '" stroke="#0f172a" stroke-width="2"/>';
+  }
+
+  svg.innerHTML = '<defs><linearGradient id="grad-' + svgId + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="' + color + '" stop-opacity="0.3"/><stop offset="100%" stop-color="' + color + '" stop-opacity="0"/></linearGradient></defs>' +
+    gridLines + '<path d="' + area + '" fill="url(#grad-' + svgId + ')" />' +
+    '<polyline points="' + points + '" fill="none" stroke="' + color + '" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+    dots + xLabels + '<text x="' + (w/2) + '" y="18" text-anchor="middle" fill="#f1f5f9" font-size="12" font-weight="600">' + label + '</text>';
+}
+
+function drawBarChart(svgId, dataArr, colors, label, isMoney) {
+  var svg = document.getElementById(svgId);
+  var w = 600, h = 280, pad = { top: 30, right: 30, bottom: 40, left: 70 };
+  var cw = w - pad.left - pad.right, ch = h - pad.top - pad.bottom;
+  var maxVal = dataArr[0];
+  for (var i = 1; i < dataArr.length; i++) if (dataArr[i] > maxVal) maxVal = dataArr[i];
+  var barW = (cw / dataArr.length) * 0.6, gap = (cw / dataArr.length) * 0.4;
+  var bars = '', yLabels = '', xLabels = '';
+  for (var i = 0; i < dataArr.length; i++) {
+    var x = pad.left + i * (barW + gap) + gap / 2;
+    var bh = (dataArr[i] / maxVal) * ch;
+    var y = pad.top + ch - bh;
+    bars += '<rect x="' + x + '" y="' + y + '" width="' + barW + '" height="' + bh + '" fill="' + colors[i % colors.length] + '" rx="3" opacity="0.85"/>';
+    bars += '<text x="' + (x + barW/2) + '" y="' + (y - 5) + '" text-anchor="middle" fill="#94a3b8" font-size="8">' + (isMoney ? fmtMoney(dataArr[i]) : fmtNum(dataArr[i],0)) + '</text>';
+  }
+  for (var i = 0; i <= 5; i++) {
+    var y = pad.top + (i / 5) * ch;
+    var val = maxVal * (1 - i / 5);
+    yLabels += '<text x="' + (pad.left - 10) + '" y="' + (y + 4) + '" text-anchor="end" fill="#94a3b8" font-size="10">' + (isMoney ? fmtMoney(val) : fmtNum(val,0)) + '</text>';
+  }
+  for (var i = 0; i < data.length; i++) {
+    var x = pad.left + i * (barW + gap) + gap / 2 + barW / 2;
+    xLabels += '<text x="' + x + '" y="' + (h - pad.bottom + 18) + '" text-anchor="middle" fill="#94a3b8" font-size="10">A' + data[i].year + '</text>';
+  }
+  svg.innerHTML = yLabels + bars + xLabels + '<text x="' + (w/2) + '" y="18" text-anchor="middle" fill="#f1f5f9" font-size="12" font-weight="600">' + label + '</text>';
+}
+
+function renderCharts() {
+  var accionesFinales = [], costoAcum = [], divEfectivo = [], costoPromedio = [];
+  for (var i = 0; i < data.length; i++) {
+    accionesFinales.push(data[i].accFinales);
+    costoAcum.push(data[i].costoAcum);
+    divEfectivo.push(data[i].divEfectivoTotal);
+    costoPromedio.push(data[i].costoPromedio);
+  }
+  drawLineChart('chart-acciones', accionesFinales, '#10b981', 'Evolución de Acciones Finales', false);
+  drawLineChart('chart-costo', costoAcum, '#3b82f6', 'Evolución del Costo Acumulado', true);
+  drawBarChart('chart-dividendos', divEfectivo, ['#f59e0b', '#fbbf24', '#fcd34d'], 'Dividendos Efectivo por Año', true);
+  drawLineChart('chart-promedio', costoPromedio, '#ef4444', 'Evolución del Costo Promedio por Acción', true);
+}
+
+function switchTab(name) {
+  var tabs = document.querySelectorAll('.tab');
+  var panels = document.querySelectorAll('.panel');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+  for (var i = 0; i < panels.length; i++) panels[i].classList.remove('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  document.getElementById('panel-' + name).classList.add('active');
+  if (name === 'graficos') renderCharts();
+}
+
+function toggleFormat() {
+  currencyMode = !currencyMode;
+  document.getElementById('toggle-format').classList.toggle('on');
+  document.getElementById('toggle-label').textContent = currencyMode ? 'Formato moneda ($)' : 'Formato numérico';
+  renderTable();
+  renderKPIs();
+  if (document.getElementById('panel-graficos').classList.contains('active')) renderCharts();
+}
+
+function recalc() {
+  params.accIni = parseFloat(document.getElementById('p-acc-ini').value) || 0;
+  params.costoIni = parseFloat(document.getElementById('p-costo-ini').value) || 0;
+  params.aporte = parseFloat(document.getElementById('p-aporte').value) || 0;
+  params.precio = parseFloat(document.getElementById('p-precio').value) || 0;
+  params.divAcc = parseFloat(document.getElementById('p-div-acc').value) || 0;
+  params.divPrecio = parseFloat(document.getElementById('p-div-precio').value) || 0;
+  params.primasPct = parseFloat(document.getElementById('p-primas').value) || 0;
+  params.anos = parseInt(document.getElementById('p-anos').value) || 1;
+  params.pctMetalico = parseFloat(document.getElementById('p-pct-metalico').value) || 0;
+  calculate();
+  renderTable();
+  renderKPIs();
+  if (document.getElementById('panel-graficos').classList.contains('active')) renderCharts();
+}
+
+function resetParams() {
+  document.getElementById('p-acc-ini').value = 290;
+  document.getElementById('p-costo-ini').value = 56720000;
+  document.getElementById('p-aporte').value = 48000000;
+  document.getElementById('p-precio').value = 380000;
+  document.getElementById('p-div-acc').value = 46460;
+  document.getElementById('p-div-precio').value = 250000;
+  document.getElementById('p-primas').value = 2;
+  document.getElementById('p-anos').value = 15;
+  document.getElementById('p-pct-metalico').value = 60;
+  recalc();
+}
+
+function exportToExcel() {
+  var csv = "\uFEFF";
+  var headers = ['Año','Acciones Iniciales','Aporte Anual','Precio Compra','Acciones Compradas',
+    'Dividendo Efectivo/Acc','Dividendos Efectivo','Dividendos Metálico','Acciones por Dividendo',
+    'Primas Gratis','Acciones Finales','Costo Acumulado','Costo Promedio','Total Dividendos Efectivo'];
+  csv += headers.join(';') + "\n";
+  for (var i = 0; i < data.length; i++) {
+    var row = data[i];
+    var isYear5 = row.year === 5 || row.year === 10 || row.year === 15;
+    csv += [row.year, String(row.accIni).replace(/\./g, ','), row.aporte, row.precio,
+      String(row.accCompradas).replace(/\./g, ','), row.divAcc, row.divEfectivoTotal, row.divMetalico,
+      String(row.accPorDividendo).replace(/\./g, ','), String(row.primasGratis).replace(/\./g, ','),
+      String(row.accFinales).replace(/\./g, ','), row.costoAcum,
+      String(row.costoPromedio).replace(/\./g, ','), isYear5 ? row.totalDivEfectivo : ''].join(';') + "\n";
+  }
+  var last = data[data.length - 1];
+  var totalAporte = params.aporte * params.anos;
+  var sumAccCompradas = 0, sumDivEfectivo = 0, sumDivMetalico = 0, sumAccDiv = 0, sumPrimas = 0;
+  for (var j = 0; j < data.length; j++) {
+    sumAccCompradas += data[j].accCompradas;
+    sumDivEfectivo += data[j].divEfectivoTotal;
+    sumDivMetalico += data[j].divMetalico;
+    sumAccDiv += data[j].accPorDividendo;
+    sumPrimas += data[j].primasGratis;
+  }
+  csv += ['TOTAL','',totalAporte,'',String(sumAccCompradas).replace(/\./g, ','),'',
+    sumDivEfectivo, sumDivMetalico, String(sumAccDiv).replace(/\./g, ','),
+    String(sumPrimas).replace(/\./g, ','), String(last.accFinales).replace(/\./g, ','),
+    last.costoAcum, String(last.costoPromedio).replace(/\./g, ','), last.totalDivEfectivo].join(';') + "\n";
+  csv += "\n\nPARÁMETROS\nParámetro;Valor\n";
+  csv += 'Acciones Iniciales;' + params.accIni + "\n";
+  csv += 'Costo Acumulado Inicial;' + params.costoIni + "\n";
+  csv += 'Aporte Anual;' + params.aporte + "\n";
+  csv += 'Precio Compra;' + params.precio + "\n";
+  csv += 'Dividendo Efectivo/Acción;' + params.divAcc + "\n";
+  csv += 'Precio Dividendo Acciones;' + params.divPrecio + "\n";
+  csv += 'Primas % Anual;' + params.primasPct + "\n";
+  csv += '% Dividendo Metálico;' + params.pctMetalico + "\n";
+  csv += 'Años Simulación;' + params.anos + "\n";
+
+  var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'Simulacion_Dividendos_' + new Date().toISOString().slice(0,10) + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+calculate();
+renderTable();
+renderKPIs();
+</script>
+
+</body>
+</html>
