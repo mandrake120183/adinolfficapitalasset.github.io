@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adinolffi Capital Asset — Simulador de Portafolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{
+  --navy:#1E2C42;--navy2:#162033;--navy3:#253550;--navy4:#1a2940;
+  --silver:#C8C8C8;--gold:#B8953A;--gold2:#d4aa50;--gold3:#e8c870;
+  --white:#FFFFFF;--off:#F6F7F9;--bg:#f0f2f5;
+  --green:#27500A;--green-bg:#EAF3DE;--green-lt:#4caf50;
+  --red:#791F1F;--red-bg:#FCEBEB;--red-lt:#e05050;
+  --blue:#0C447C;--blue-bg:#E6F1FB;--blue-lt:#3a7fd4;
+  --amber:#633806;--amber-bg:#FAEEDA;
+  --border:rgba(30,44,66,0.1);--border2:rgba(30,44,66,0.06);
+  --shadow:0 2px 12px rgba(30,44,66,0.08);
+  --shadow2:0 4px 24px rgba(30,44,66,0.12);
+  --r:10px;--r2:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--navy);font-family:'Barlow',sans-serif;
+  font-weight:300;overflow-x:hidden;min-height:100vh}
+
+/* ── HEADER ── */
+.hdr{background:var(--navy);padding:0 2rem;height:64px;display:flex;
+  align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;
+  box-shadow:var(--shadow2);border-bottom:2px solid var(--gold)}
+.hdr-brand{display:flex;align-items:center;gap:.9rem}
+.hdr-logo{width:40px;height:40px;border:1px solid rgba(200,200,200,0.25);
+  display:flex;align-items:center;justify-content:center}
+.hdr-logo-inner{font-family:'Cinzel',serif;font-size:12px;color:var(--silver)}
+.hdr-name{font-family:'Cinzel',serif;font-size:13px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--white)}
+.hdr-sub{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:300;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--silver);opacity:.7;margin-top:1px}
+.hdr-right{display:flex;align-items:center;gap:.8rem}
+.hdr-badge{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--silver);opacity:.6;padding:4px 10px;
+  border:1px solid rgba(200,200,200,0.15);border-radius:3px}
+.export-btn{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--navy);background:var(--gold);
+  border:none;padding:9px 20px;cursor:pointer;border-radius:3px;transition:background .2s;
+  display:flex;align-items:center;gap:6px}
+.export-btn:hover{background:var(--gold2)}
+.export-btn svg{width:14px;height:14px;fill:currentColor}
+
+/* ── MAIN LAYOUT ── */
+.main{display:grid;grid-template-columns:280px 1fr;gap:0;min-height:calc(100vh - 64px)}
+
+/* ── SIDEBAR ── */
+.sidebar{background:var(--white);border-right:1px solid var(--border);
+  padding:1.5rem;overflow-y:auto;position:sticky;top:64px;height:calc(100vh - 64px)}
+.sidebar-title{font-family:'Cinzel',serif;font-size:11px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--navy);
+  margin-bottom:1.2rem;padding-bottom:.6rem;border-bottom:2px solid var(--gold)}
+.param-group{margin-bottom:1.4rem}
+.param-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--navy);opacity:.7;
+  margin-bottom:.4rem;display:block}
+.param-val{font-size:15px;font-weight:500;color:var(--navy);margin-bottom:.5rem;
+  display:block}
+.param-val span{font-size:11px;font-weight:300;color:var(--silver);margin-left:4px}
+input[type=range]{width:100%;height:4px;-webkit-appearance:none;
+  background:linear-gradient(to right,var(--gold) var(--pct,50%),var(--border) var(--pct,50%));
+  border-radius:2px;outline:none;cursor:pointer;margin-bottom:.3rem}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;
+  border-radius:50%;background:var(--navy);border:2px solid var(--gold);cursor:pointer}
+.param-minmax{display:flex;justify-content:space-between;
+  font-size:10px;color:var(--silver);font-family:'Barlow Condensed',sans-serif}
+.sidebar-divider{height:.5px;background:var(--border);margin:1.2rem 0}
+.reset-btn{width:100%;font-family:'Barlow Condensed',sans-serif;font-size:10px;
+  font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--silver);
+  background:none;border:1px solid var(--border);padding:8px;cursor:pointer;
+  border-radius:3px;transition:all .2s}
+.reset-btn:hover{border-color:var(--navy);color:var(--navy)}
+.sidebar-note{font-size:11px;font-weight:300;color:var(--silver);line-height:1.6;
+  margin-top:1rem;padding:10px 12px;background:var(--off);border-radius:var(--r2);
+  border-left:2px solid var(--gold)}
+
+/* ── CONTENT ── */
+.content{padding:1.5rem;overflow-y:auto}
+
+/* ── KPI ROW ── */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:1rem;margin-bottom:1.5rem}
+.kpi{background:var(--white);border-radius:var(--r);padding:1.2rem 1.4rem;
+  box-shadow:var(--shadow);border:1px solid var(--border2);
+  position:relative;overflow:hidden}
+.kpi::after{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.kpi.g::after{background:linear-gradient(90deg,var(--green-lt),#7ed321)}
+.kpi.b::after{background:linear-gradient(90deg,var(--blue-lt),#5ba3f5)}
+.kpi.gold::after{background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.kpi.r::after{background:linear-gradient(90deg,var(--red-lt),#e07070)}
+.kpi.navy::after{background:linear-gradient(90deg,var(--navy3),var(--navy))}
+.kpi-lbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:400;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--silver);margin-bottom:.5rem}
+.kpi-val{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:400;
+  color:var(--navy);line-height:1;margin-bottom:.25rem}
+.kpi-sub{font-size:11px;font-weight:300;color:var(--silver)}
+.kpi.g .kpi-val{color:var(--green)}
+.kpi.b .kpi-val{color:var(--blue)}
+.kpi.gold .kpi-val{color:var(--amber)}
+
+/* ── SECTION HEADER ── */
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1rem}
+.sec-title{font-family:'Cinzel',serif;font-size:11px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--navy)}
+.sec-sub{font-size:11px;font-weight:300;color:var(--silver)}
+
+/* ── CHART GRID ── */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.chart-grid.full{grid-template-columns:1fr}
+.chart-card{background:var(--white);border-radius:var(--r);padding:1.4rem;
+  box-shadow:var(--shadow);border:1px solid var(--border2)}
+.chart-card-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;
+  font-weight:500;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--navy);margin-bottom:1rem;opacity:.8}
+.ch{position:relative}
+.ch-240{height:240px}.ch-200{height:200px}.ch-180{height:180px}
+
+/* ── TABLE ── */
+.tbl-card{background:var(--white);border-radius:var(--r);box-shadow:var(--shadow);
+  border:1px solid var(--border2);margin-bottom:1.5rem;overflow:hidden}
+.tbl-header{padding:1rem 1.4rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{padding:9px 12px;text-align:right;background:var(--navy);color:var(--white);
+  font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;
+  position:sticky;top:0}
+thead th:first-child{text-align:center;border-right:1px solid rgba(255,255,255,0.1)}
+thead th.gold-hdr{background:var(--gold);color:var(--navy)}
+tbody td{padding:8px 12px;text-align:right;border-bottom:1px solid var(--border2);
+  font-weight:300;color:var(--navy);white-space:nowrap}
+tbody td:first-child{text-align:center;font-family:'Barlow Condensed',sans-serif;
+  font-weight:500;font-size:13px;background:var(--navy);color:var(--white)}
+tbody tr:hover td{background:var(--off)}
+tbody tr:hover td:first-child{background:var(--navy3)}
+tbody tr.total-row td{background:var(--navy);color:var(--white);font-weight:500;
+  font-family:'Barlow Condensed',sans-serif}
+tbody tr.total-row td:first-child{background:var(--gold);color:var(--navy)}
+.up{color:var(--green);font-weight:500}
+.dn{color:var(--red-lt);font-weight:500}
+.gold-cell{color:var(--amber);font-weight:500}
+.accent-cell{color:var(--blue);font-weight:500}
+
+/* ── LEGEND ── */
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:.8rem}
+.legend span{display:flex;align-items:center;gap:5px;font-size:11px;
+  color:var(--silver);font-family:'Barlow Condensed',sans-serif;letter-spacing:.06em}
+.lsq{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+/* ── FOOTER ── */
+.footer{background:var(--navy);padding:1.2rem 2rem;
+  border-top:2px solid var(--gold);
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(200,200,200,0.4)}
+
+/* ── TOOLTIP OVERRIDE ── */
+.custom-tooltip{background:var(--navy);border:1px solid var(--gold);
+  border-radius:6px;padding:10px 14px;pointer-events:none}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .main{grid-template-columns:1fr}
+  .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border)}
+  .chart-grid{grid-template-columns:1fr}
+  .kpi-row{grid-template-columns:1fr 1fr}
+  .hdr-badge{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-brand">
+    <div class="hdr-logo"><div class="hdr-logo-inner">AC</div></div>
+    <div>
+      <div class="hdr-name">Adinolffi Capital Asset S.A.</div>
+      <div class="hdr-sub">Simulador de Portafolio · Banco Continental S.A.E.C.A.</div>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <div class="hdr-badge" id="hdr-date">—</div>
+    <button class="export-btn" onclick="exportExcel()">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM8 17l2.5-4L8 9h1.5l1.5 2.8L12.5 9H14l-2.5 4 2.5 4H12.5L11 14.2 9.5 17H8z"/></svg>
+      Exportar Excel
+    </button>
+  </div>
+</header>
+
+<div class="main">
+
+<!-- SIDEBAR PARÁMETROS -->
+<aside class="sidebar">
+  <div class="sidebar-title">Parámetros del modelo</div>
+
+  <div class="param-group">
+    <span class="param-label">Acciones iniciales</span>
+    <span class="param-val" id="v-acc">290 <span>acciones</span></span>
+    <input type="range" id="p-acc" min="100" max="1000" value="290" step="10" oninput="updateSlider(this,'v-acc',v=>v+' acc');sim()">
+    <div class="param-minmax"><span>100</span><span>1.000</span></div>
+  </div>
+
+  <div class="param-group">
+    <span class="param-label">Aporte anual</span>
+    <span class="param-val" id="v-ap">48.000.000 <span>Gs.</span></span>
+    <input type="range" id="p-ap" min="12000000" max="120000000" value="48000000" step="4000000" oninput="updateSlider(this,'v-ap',v=>(v/1e6).toFixed(0)+' M Gs.');sim()">
+    <div class="param-minmax"><span>12 M</span><span>120 M</span></div>
+  </div>
+
+  <div class="param-group">
+    <span class="param-label">Precio de compra (Gs.)</span>
+    <span class="param-val" id="v-pc">380.000 <span>Gs./acción</span></span>
+    <input type="range" id="p-pc" min="250000" max="600000" value="380000" step="5000" oninput="updateSlider(this,'v-pc',v=>fmt(v)+' Gs.');sim()">
+    <div class="param-minmax"><span>250k</span><span>600k</span></div>
+  </div>
+
+  <div class="param-group">
+    <span class="param-label">Dividendo efectivo / acción</span>
+    <span class="param-val" id="v-div">46.460 <span>Gs./acción</span></span>
+    <input type="range" id="p-div" min="20000" max="120000" value="46460" step="1000" oninput="updateSlider(this,'v-div',v=>fmt(v)+' Gs.');sim()">
+    <div class="param-minmax"><span>20k</span><span>120k</span></div>
+  </div>
+
+  <div class="param-group">
+    <span class="param-label">Precio acción dividendo</span>
+    <span class="param-val" id="v-pdiv">250.000 <span>Gs./acción</span></span>
+    <input type="range" id="p-pdiv" min="150000" max="400000" value="250000" step="5000" oninput="updateSlider(this,'v-pdiv',v=>fmt(v)+' Gs.');sim()">
+    <div class="param-minmax"><span>150k</span><span>400k</span></div>
+  </div>
+
+  <div class="param-group">
+    <span class="param-label">Primas anuales (%)</span>
+    <span class="param-val" id="v-pr">2 <span>% de acciones</span></span>
+    <input type="range" id="p-pr" min="0" max="10" value="2" step="0.5" oninput="updateSlider(this,'v-pr',v=>v+'%');sim()">
+    <div class="param-minmax"><span>0%</span><span>10%</span></div>
+  </div>
+
+  <div class="param-group">
+    <span class="param-label">Crecimiento dividendo/año</span>
+    <span class="param-val" id="v-dg">0 <span>% anual</span></span>
+    <input type="range" id="p-dg" min="0" max="15" value="0" step="1" oninput="updateSlider(this,'v-dg',v=>v+'%');sim()">
+    <div class="param-minmax"><span>0%</span><span>15%</span></div>
+  </div>
+
+  <div class="param-group">
+    <span class="param-label">Años de proyección</span>
+    <span class="param-val" id="v-yr">15 <span>años</span></span>
+    <input type="range" id="p-yr" min="5" max="30" value="15" step="1" oninput="updateSlider(this,'v-yr',v=>v+' años');sim()">
+    <div class="param-minmax"><span>5</span><span>30</span></div>
+  </div>
+
+  <div class="sidebar-divider"></div>
+  <button class="reset-btn" onclick="resetParams()">↺ Restablecer valores originales</button>
+
+  <div class="sidebar-note">
+    El 60% del dividendo se reinvierte en nuevas compras junto al aporte anual. El 40% llega como acciones nuevas al precio de dividendo. Las primas se calculan como % de las acciones iniciales del año.
+  </div>
+</aside>
+
+<!-- CONTENIDO PRINCIPAL -->
+<div class="content">
+
+  <!-- KPIs -->
+  <div class="kpi-row" id="kpi-row"></div>
+
+  <!-- CHARTS ROW 1 -->
+  <div class="chart-grid" style="margin-bottom:1rem">
+    <div class="chart-card">
+      <div class="chart-card-title">Acciones acumuladas — año a año</div>
+      <div class="legend">
+        <span><span class="lsq" style="background:#1E2C42"></span>Compradas</span>
+        <span><span class="lsq" style="background:#0F7A56"></span>Div. acciones</span>
+        <span><span class="lsq" style="background:#B8953A"></span>Primas</span>
+      </div>
+      <div class="ch ch-240"><canvas id="c-acc" role="img" aria-label="Evolución de acciones acumuladas año a año por tipo de adquisición"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">Dividendos en metálico acumulados</div>
+      <div class="legend">
+        <span><span class="lsq" style="background:#27500A"></span>Div. efectivo anual</span>
+        <span><span class="lsq" style="background:#4caf50;opacity:.5"></span>Acumulado</span>
+      </div>
+      <div class="ch ch-240"><canvas id="c-div" role="img" aria-label="Dividendos en metálico anuales y acumulados"></canvas></div>
+    </div>
+  </div>
+
+  <!-- CHARTS ROW 2 -->
+  <div class="chart-grid" style="margin-bottom:1.5rem">
+    <div class="chart-card">
+      <div class="chart-card-title">Capital invertido vs valor de la cartera</div>
+      <div class="legend">
+        <span><span class="lsq" style="background:#C04040;opacity:.7"></span>Costo acumulado</span>
+        <span><span class="lsq" style="background:#3a7fd4"></span>Valor cartera (precio compra)</span>
+      </div>
+      <div class="ch ch-200"><canvas id="c-cap" role="img" aria-label="Comparativa de capital invertido versus valor de mercado de la cartera"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-title">Composición del crecimiento anual</div>
+      <div class="legend">
+        <span><span class="lsq" style="background:#1E2C42"></span>Compradas</span>
+        <span><span class="lsq" style="background:#0F7A56"></span>Div. acc.</span>
+        <span><span class="lsq" style="background:#B8953A"></span>Primas</span>
+      </div>
+      <div class="ch ch-200"><canvas id="c-comp" role="img" aria-label="Composición de nuevas acciones por año: compradas, dividendo y primas"></canvas></div>
+    </div>
+  </div>
+
+  <!-- TABLA -->
+  <div class="tbl-card">
+    <div class="tbl-header">
+      <div>
+        <div class="sec-title">Proyección detallada año a año</div>
+        <div class="sec-sub" style="margin-top:3px" id="tbl-sub">—</div>
+      </div>
+    </div>
+    <div class="tbl-wrap">
+      <table id="main-table">
+        <thead><tr>
+          <th>Año</th>
+          <th>Acc. Iniciales</th>
+          <th>+Compradas</th>
+          <th>+Div. Acc.</th>
+          <th>+Primas</th>
+          <th>Acc. Finales</th>
+          <th>Div./Acción</th>
+          <th class="gold-hdr">Div. Efectivo</th>
+          <th class="gold-hdr">Div. Metálico (60%)</th>
+          <th>Div. Acc. (40%)</th>
+          <th>Costo Acum.</th>
+          <th>Valor Cartera</th>
+          <th>Cobertura Sal.</th>
+        </tr></thead>
+        <tbody id="main-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /content -->
+</div><!-- /main -->
+
+<footer class="footer">
+  <span>Adinolffi Capital Asset S.A. — Luque, Paraguay</span>
+  <span id="ft-date">—</span>
+  <span>Solo efectos de planificación — No constituye asesoría financiera</span>
+</footer>
+
+<script>
+// ════════════════════════════════════════════════════
+// DEFAULTS
+// ════════════════════════════════════════════════════
+const DEFAULTS = {
+  acc:290, ap:48000000, pc:380000, div:46460,
+  pdiv:250000, pr:2, dg:0, yr:15
+};
+const SAL_MENSUAL = 15000000;
+const SAL_ANUAL   = SAL_MENSUAL * 12;
+
+// ════════════════════════════════════════════════════
+// UTILS
+// ════════════════════════════════════════════════════
+function fmt(n){return Math.round(n||0).toLocaleString('es-PY')}
+function fmtM(n){const m=(n||0)/1e6; return m>=100?m.toFixed(0)+'M':m.toFixed(1)+'M'}
+function fmtAx(v){const a=Math.abs(v);return a>=1e9?(v/1e9).toFixed(1)+'B':a>=1e6?(v/1e6).toFixed(0)+'M':a>=1e3?(v/1e3).toFixed(0)+'K':v}
+
+Chart.defaults.font.family="'Barlow Condensed',sans-serif";
+Chart.defaults.font.size=11;
+
+const AX={grid:{color:'rgba(30,44,66,0.06)'},ticks:{color:'rgba(30,44,66,0.45)',callback:fmtAx}};
+const AX_N={grid:{color:'rgba(30,44,66,0.06)'},ticks:{color:'rgba(30,44,66,0.45)'}};
+
+let charts={};
+function mkChart(id,cfg){
+  const el=document.getElementById(id);if(!el)return;
+  if(charts[id])charts[id].destroy();
+  charts[id]=new Chart(el,cfg);
+  return charts[id];
+}
+
+// ════════════════════════════════════════════════════
+// SIMULATION CORE
+// ════════════════════════════════════════════════════
+function getParams(){
+  return {
+    acc:   +document.getElementById('p-acc').value,
+    ap:    +document.getElementById('p-ap').value,
+    pc:    +document.getElementById('p-pc').value,
+    div:   +document.getElementById('p-div').value,
+    pdiv:  +document.getElementById('p-pdiv').value,
+    pr:    +document.getElementById('p-pr').value,
+    dg:    +document.getElementById('p-dg').value,
+    yr:    +document.getElementById('p-yr').value,
+  };
+}
+
+function calcRows(p){
+  const rows=[];
+  let acc_init=p.acc, costo_acum=56720000;
+  for(let y=1;y<=p.yr;y++){
+    const div_acc   = p.div * Math.pow(1+p.dg/100, y-1);
+    const div_ef    = acc_init * div_acc;
+    const metalico  = div_ef * 0.60;
+    const acc_div   = (div_ef * 0.40) / p.pdiv;
+    const primas    = acc_init * p.pr / 100;
+    const acc_comp  = (p.ap + metalico) / p.pc;
+    const acc_fin   = acc_init + acc_comp + acc_div + primas;
+    costo_acum     += p.ap;
+    const val_cart  = acc_fin * p.pc;
+    const cubre     = metalico >= SAL_ANUAL;
+    rows.push({
+      y, acc_init, acc_comp, acc_div, primas,
+      acc_fin, div_acc, div_ef, metalico,
+      costo_acum, val_cart, cubre
+    });
+    acc_init = acc_fin;
+  }
+  return rows;
+}
+
+// ════════════════════════════════════════════════════
+// RENDER
+// ════════════════════════════════════════════════════
+function sim(){
+  const p=getParams(), rows=calcRows(p);
+  const last=rows[rows.length-1];
+  const totMet=rows.reduce((a,r)=>a+r.metalico,0);
+  const totEf=rows.reduce((a,r)=>a+r.div_ef,0);
+  const beRow=rows.find(r=>r.cubre);
+  const mult=last.acc_fin/p.acc;
+
+  // KPIs
+  document.getElementById('kpi-row').innerHTML=`
+    <div class="kpi g">
+      <div class="kpi-lbl">Acciones al año ${p.yr}</div>
+      <div class="kpi-val">${fmt(Math.round(last.acc_fin))}</div>
+      <div class="kpi-sub">vs ${fmt(p.acc)} iniciales · ${mult.toFixed(1)}x</div>
+    </div>
+    <div class="kpi gold">
+      <div class="kpi-lbl">Div. metálico acumulado</div>
+      <div class="kpi-val">Gs. ${fmtM(totMet)}</div>
+      <div class="kpi-sub">60% de Gs. ${fmtM(totEf)} total</div>
+    </div>
+    <div class="kpi b">
+      <div class="kpi-lbl">Valor cartera año ${p.yr}</div>
+      <div class="kpi-val">Gs. ${fmtM(last.val_cart)}</div>
+      <div class="kpi-sub">Costo acum: Gs. ${fmtM(last.costo_acum)}</div>
+    </div>
+    <div class="kpi ${beRow?'g':'r'}">
+      <div class="kpi-lbl">Cubre salario Gs. 15M/mes</div>
+      <div class="kpi-val">${beRow?'Año '+beRow.y:'No cubre'}</div>
+      <div class="kpi-sub">${beRow?'Metalico anual supera Gs. '+fmtM(SAL_ANUAL):'Ajustar parámetros'}</div>
+    </div>
+    <div class="kpi navy">
+      <div class="kpi-lbl">Div. metálico año ${p.yr}</div>
+      <div class="kpi-val">Gs. ${fmtM(last.metalico/12)}/mes</div>
+      <div class="kpi-sub">Gs. ${fmtM(last.metalico)} anual</div>
+    </div>
+  `;
+
+  const labs=rows.map(r=>'Año '+r.y);
+
+  // Chart 1: Acciones apiladas
+  mkChart('c-acc',{type:'bar',data:{labels:labs,datasets:[
+    {label:'Compradas',data:rows.map((r,i)=>i===0?p.acc:rows[i-1].acc_fin).map((a,i)=>rows[i].acc_comp),backgroundColor:'#1E2C42',stack:'s',borderRadius:2},
+    {label:'Div. acciones',data:rows.map(r=>r.acc_div),backgroundColor:'#0F7A56',stack:'s',borderRadius:2},
+    {label:'Primas',data:rows.map(r=>r.primas),backgroundColor:'#B8953A',stack:'s',borderRadius:2},
+    {label:'Base anterior',data:[p.acc,...rows.slice(0,-1).map(r=>r.acc_fin)],backgroundColor:'rgba(30,44,66,0.15)',stack:'s'},
+  ]},options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{
+      footer:items=>'Total: '+fmt(Math.round(items.reduce((a,i)=>a+i.raw,0)))
+    }}},
+    scales:{x:{...AX_N,stacked:true,ticks:{...AX_N.ticks,maxRotation:45,autoSkip:true,maxTicksLimit:p.yr}},
+            y:{...AX,stacked:true}}}});
+
+  // Chart 2: Dividendos metálico
+  let acum=0;
+  const acumData=rows.map(r=>{acum+=r.metalico;return acum;});
+  mkChart('c-div',{data:{labels:labs,datasets:[
+    {label:'Div. efectivo anual',data:rows.map(r=>r.metalico),type:'bar',backgroundColor:'rgba(39,80,10,0.75)',borderRadius:2,order:2},
+    {label:'Acumulado',data:acumData,type:'line',borderColor:'#4caf50',backgroundColor:'rgba(76,175,80,0.08)',fill:true,tension:.4,borderWidth:2,pointRadius:2,order:1},
+  ]},options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{x:{...AX_N,ticks:{...AX_N.ticks,maxRotation:45,autoSkip:true,maxTicksLimit:p.yr}},y:AX}}});
+
+  // Chart 3: Capital vs valor
+  mkChart('c-cap',{type:'bar',data:{labels:labs,datasets:[
+    {label:'Costo acum.',data:rows.map(r=>r.costo_acum),backgroundColor:'rgba(192,64,64,0.65)',borderRadius:2},
+    {label:'Valor cartera',data:rows.map(r=>r.val_cart),backgroundColor:'rgba(58,127,212,0.7)',borderRadius:2},
+  ]},options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{x:{...AX_N,ticks:{...AX_N.ticks,maxRotation:45,autoSkip:true,maxTicksLimit:p.yr}},y:AX}}});
+
+  // Chart 4: Composición incremental
+  mkChart('c-comp',{type:'bar',data:{labels:labs,datasets:[
+    {label:'Compradas',data:rows.map(r=>Math.round(r.acc_comp)),backgroundColor:'#1E2C42',borderRadius:2,stack:'s'},
+    {label:'Div. acc.',data:rows.map(r=>Math.round(r.acc_div)),backgroundColor:'#0F7A56',borderRadius:2,stack:'s'},
+    {label:'Primas',data:rows.map(r=>Math.round(r.primas)),backgroundColor:'#B8953A',borderRadius:2,stack:'s'},
+  ]},options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{x:{...AX_N,stacked:true,ticks:{...AX_N.ticks,maxRotation:45,autoSkip:true,maxTicksLimit:p.yr}},
+            y:{...AX,stacked:true}}}});
+
+  // Tabla
+  document.getElementById('tbl-sub').textContent=
+    `${p.yr} años · Aporte anual Gs. ${fmtM(p.ap)} · Precio compra Gs. ${fmt(p.pc)} · Div/acc Gs. ${fmt(Math.round(p.div))}`;
+
+  let totComp=0,totDivAcc=0,totPrimas=0,totMetal=0,totDivEf=0;
+  document.getElementById('main-tbody').innerHTML=rows.map(r=>{
+    totComp+=r.acc_comp; totDivAcc+=r.acc_div; totPrimas+=r.primas;
+    totMetal+=r.metalico; totDivEf+=r.div_ef;
+    const cubMes=r.metalico/12;
+    const cubPct=r.metalico/SAL_ANUAL*100;
+    const cubClass=r.cubre?'up':cubPct>50?'gold-cell':'';
+    return `<tr>
+      <td>${r.y}</td>
+      <td>${fmt(Math.round(r.acc_init))}</td>
+      <td class="accent-cell">+${fmt(Math.round(r.acc_comp))}</td>
+      <td class="up">+${fmt(Math.round(r.acc_div))}</td>
+      <td class="gold-cell">+${fmt(Math.round(r.primas))}</td>
+      <td style="font-weight:500">${fmt(Math.round(r.acc_fin))}</td>
+      <td>Gs. ${fmt(Math.round(r.div_acc))}</td>
+      <td>Gs. ${fmt(Math.round(r.div_ef))}</td>
+      <td class="gold-cell">Gs. ${fmt(Math.round(r.metalico))}</td>
+      <td class="up">${fmt(Math.round(r.acc_div))} acc.</td>
+      <td>Gs. ${fmt(r.costo_acum)}</td>
+      <td class="accent-cell">Gs. ${fmt(Math.round(r.val_cart))}</td>
+      <td class="${cubClass}">${cubPct.toFixed(0)}% · Gs. ${fmtM(cubMes)}/m</td>
+    </tr>`;
+  }).join('')+`<tr class="total-row">
+    <td>TOT.</td>
+    <td></td>
+    <td>${fmt(Math.round(totComp))}</td>
+    <td>${fmt(Math.round(totDivAcc))}</td>
+    <td>${fmt(Math.round(totPrimas))}</td>
+    <td>${fmt(Math.round(last.acc_fin))}</td>
+    <td></td>
+    <td>Gs. ${fmt(Math.round(totDivEf))}</td>
+    <td>Gs. ${fmt(Math.round(totMetal))}</td>
+    <td></td>
+    <td>Gs. ${fmt(last.costo_acum)}</td>
+    <td>Gs. ${fmt(Math.round(last.val_cart))}</td>
+    <td></td>
+  </tr>`;
+}
+
+// ════════════════════════════════════════════════════
+// EXPORT EXCEL
+// ════════════════════════════════════════════════════
+function exportExcel(){
+  const p=getParams(), rows=calcRows(p);
+  const wb=XLSX.utils.book_new();
+
+  // Sheet 1: Simulación
+  const ws1=[
+    ['ADINOLFFI CAPITAL ASSET S.A. — Simulación de Portafolio'],
+    [`Generado: ${new Date().toLocaleString('es-PY')}`],
+    [],
+    ['Año','Acc. Iniciales','Compradas','Div. Acciones','Primas','Acc. Finales',
+     'Div./Acción (Gs.)','Div. Efectivo Total (Gs.)','Div. Metálico 60% (Gs.)',
+     'Acc. por Dividendo','Costo Acumulado (Gs.)','Valor Cartera (Gs.)','Cobertura Salario %'],
+    ...rows.map(r=>[
+      r.y,Math.round(r.acc_init),Math.round(r.acc_comp),Math.round(r.acc_div),
+      Math.round(r.primas),Math.round(r.acc_fin),Math.round(r.div_acc),
+      Math.round(r.div_ef),Math.round(r.metalico),Math.round(r.acc_div),
+      r.costo_acum,Math.round(r.val_cart),
+      +(r.metalico/SAL_ANUAL*100).toFixed(1)
+    ]),
+    ['TOTALES','','',
+      Math.round(rows.reduce((a,r)=>a+r.acc_comp,0)),
+      Math.round(rows.reduce((a,r)=>a+r.acc_div,0)),
+      Math.round(rows.reduce((a,r)=>a+r.primas,0)),
+      Math.round(rows[rows.length-1].acc_fin),'','',
+      Math.round(rows.reduce((a,r)=>a+r.div_ef,0)),
+      Math.round(rows.reduce((a,r)=>a+r.metalico,0)),'',
+      rows[rows.length-1].costo_acum,
+      Math.round(rows[rows.length-1].val_cart),''],
+  ];
+  const wsSim=XLSX.utils.aoa_to_sheet(ws1);
+  wsSim['!cols']=[{wch:6},{wch:14},{wch:12},{wch:14},{wch:10},{wch:14},
+                   {wch:18},{wch:22},{wch:22},{wch:18},{wch:22},{wch:22},{wch:18}];
+  XLSX.utils.book_append_sheet(wb,wsSim,'Simulacion');
+
+  // Sheet 2: Parámetros
+  const ws2=[
+    ['PARÁMETROS DE LA SIMULACIÓN'],
+    [`Generado: ${new Date().toLocaleString('es-PY')}`],
+    [],
+    ['Parámetro','Valor'],
+    ['Acciones iniciales',p.acc],
+    ['Costo acumulado inicial (Gs.)',56720000],
+    ['Aporte anual (Gs.)',p.ap],
+    ['Precio de compra (Gs.)',p.pc],
+    ['Dividendo efectivo/acción (Gs.)',p.div],
+    ['Precio acción dividendo (Gs.)',p.pdiv],
+    ['Primas anuales (%)',p.pr],
+    ['Crecimiento dividendo anual (%)',p.dg],
+    ['Años de proyección',p.yr],
+    ['Salario mensual objetivo (Gs.)',15000000],
+    ['Salario anual objetivo (Gs.)',180000000],
+  ];
+  const wsPar=XLSX.utils.aoa_to_sheet(ws2);
+  wsPar['!cols']=[{wch:35},{wch:20}];
+  XLSX.utils.book_append_sheet(wb,wsPar,'Parametros');
+
+  XLSX.writeFile(wb,`Simulacion_AdinolffiCapital_${new Date().toISOString().slice(0,10)}.xlsx`);
+}
+
+// ════════════════════════════════════════════════════
+// SLIDER HELPER
+// ════════════════════════════════════════════════════
+function updateSlider(el,labelId,fmtFn){
+  const min=+el.min,max=+el.max,val=+el.value;
+  const pct=(val-min)/(max-min)*100;
+  el.style.setProperty('--pct',pct+'%');
+  document.getElementById(labelId).innerHTML=fmtFn(val)+' <span style="font-size:11px;font-weight:300;color:var(--silver)"></span>';
+}
+
+function initSliders(){
+  document.querySelectorAll('input[type=range]').forEach(el=>{
+    const min=+el.min,max=+el.max,val=+el.value;
+    const pct=(val-min)/(max-min)*100;
+    el.style.setProperty('--pct',pct+'%');
+  });
+}
+
+function resetParams(){
+  document.getElementById('p-acc').value=DEFAULTS.acc;
+  document.getElementById('p-ap').value=DEFAULTS.ap;
+  document.getElementById('p-pc').value=DEFAULTS.pc;
+  document.getElementById('p-div').value=DEFAULTS.div;
+  document.getElementById('p-pdiv').value=DEFAULTS.pdiv;
+  document.getElementById('p-pr').value=DEFAULTS.pr;
+  document.getElementById('p-dg').value=DEFAULTS.dg;
+  document.getElementById('p-yr').value=DEFAULTS.yr;
+  document.getElementById('v-acc').innerHTML='290 <span>acciones</span>';
+  document.getElementById('v-ap').innerHTML='48 M Gs. <span></span>';
+  document.getElementById('v-pc').innerHTML='380.000 Gs. <span></span>';
+  document.getElementById('v-div').innerHTML='46.460 Gs. <span></span>';
+  document.getElementById('v-pdiv').innerHTML='250.000 Gs. <span></span>';
+  document.getElementById('v-pr').innerHTML='2% <span></span>';
+  document.getElementById('v-dg').innerHTML='0% <span></span>';
+  document.getElementById('v-yr').innerHTML='15 años <span></span>';
+  initSliders();
+  sim();
+}
+
+// ════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════
+const now=new Date();
+const dateStr=now.toLocaleDateString('es-PY',{day:'2-digit',month:'long',year:'numeric'});
+document.getElementById('hdr-date').textContent=dateStr;
+document.getElementById('ft-date').textContent='Banco Continental S.A.E.C.A. · Preferidas Serie C · '+dateStr;
+initSliders();
+sim();
+</script>
+</body>
+</html>
